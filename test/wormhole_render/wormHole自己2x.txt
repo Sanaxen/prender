@@ -1,0 +1,213 @@
+IMAGE
+640 480
+
+320 240
+160 120
+
+OUTPUT
+wormHole自己2x.hdr
+
+SCREEN
+30.0 30.0 40.0
+
+#TIMELIMIT
+10000
+
+SAMPLING
+2
+
+THREAD
+5
+
+SUPERSAMPLING
+2
+
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#左
+OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.75 0.25 0.25
+reflection diffuse
+#normal -1
+
+#右
+OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+#normal -1
+
+#奥
+OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#手前
+OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+#normal -1
+
+#床
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#天井
+OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#緑球
+OBJECT
+sphere 65 20 20 16.5
+emission 0 0 0
+color 0.25 0.75 0.25
+reflection diffuse
+
+#鏡
+OBJECT
+sphere 27 16.5 47 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+
+
+#照明
+OBJECT
+sphere 50 90 81.6 15
+emission 36 36 36
+color 0 0 0
+reflection diffuse
+
+
+#ガラス
+OBJECT
+sphere 77 16.5 78 16.5
+emission 0 0 0
+color 1 1 1
+reflection reflection
+
+#################################################################################
+VAR ZZ
+100000000
+
+#左
+OBJECT
+sphere 100001 40.8 81.6+ZZ 100000
+emission 0 0 0
+color 0.75 0.75 0.25
+reflection diffuse
+#normal -1
+
+#右
+OBJECT
+sphere -99901 40.8 81.6+ZZ 100000
+emission 0 0 0
+color 0.25 0.75 0.75
+reflection diffuse
+#normal -1
+
+#奥
+OBJECT
+sphere 50 40.8 100000+ZZ 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#手前
+OBJECT
+sphere 50 40.8 -99750+ZZ 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+#normal -1
+
+#床
+OBJECT
+sphere 50 100000 81.6+ZZ 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#天井
+OBJECT
+sphere 50 -99918.4 81.6+ZZ 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#緑球
+OBJECT
+sphere 65 20 20+ZZ 16.5
+emission 0 0 0
+color 0.75 0.25 0.75
+reflection diffuse
+
+#鏡
+OBJECT
+sphere 27 16.5 47+ZZ 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+
+
+#照明
+OBJECT
+sphere 50 90 81.6+ZZ 15
+emission 36 36 36
+color 0 0 0
+reflection diffuse
+
+
+#ガラス
+OBJECT
+sphere 77 16.5 78+ZZ 16.5
+emission 0 0 0
+color 1 1 1
+reflection reflection
+
+#################################################################################
+
+WORMHOLE
+in 50.000000 51.600320 210.007990
+out 50.000000 51.600320 30+ZZ
+Rho 1.5
+a 0.9
+W 0.05
+dist 10
+geodesics_max_length 3000
+background_texture1 texture/InterstellarWormhole_Fig6b.bmp
+#background_texture2 texture/InterstellarWormhole_Fig10.bmp
+map_coef1 -1 0 1 0
+#map_coef2 -1 0 -1 0
+
+#InterstellarWormhole_Fig10.bmp
+
+#/Ridgecrest_Road_Ref.hdr
+

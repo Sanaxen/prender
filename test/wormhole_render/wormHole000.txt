@@ -1,0 +1,88 @@
+IMAGE
+192 144
+
+320 240
+160 120
+
+OUTPUT
+wormHole000.hdr
+
+SCREEN
+10 10 9
+
+#TIMELIMIT
+10000
+
+SAMPLING
+1
+
+THREAD
+5
+
+DEPTH
+2
+
+DEPTH_LIMIT
+3
+
+SUPERSAMPLING
+4
+
+
+CAMERA_POS
+220.0 52.0 55.0
+
+CAMERA_DIR
+-1.0 -0.1 0.0
+
+CAMERA_UPVEC
+0.0 0.0 1.0
+
+
+#OBJECT
+#sphere 170 40 40 2.0
+#emission 0 0 0
+#color 1 0 0
+#reflection diffuse
+
+
+
+#OBJECT
+#sphere 0 0 0 3000
+#emission 0 0 0
+#color 0 0 0
+#reflection diffuse
+#ibl_texture texture/Interstellar.bmp
+#ibl_texture_coef 1
+#panoramic_map 1
+#normal -1
+
+VAR X
+%XX%
+
+215
+
+VAR Y
+52
+
+VAR Z
+55
+
+#OBJECT
+#sphere X Y Z 1.3
+#emission 0 0 0
+#color 1 0 0
+#reflection diffuse
+
+
+
+WORMHOLE
+in X Y Z
+Rho 1.3
+a 0.5
+W 0.05
+geodesics_max_length 1000
+background_texture1 texture/InterstellarWormhole_Fig6b.bmp
+background_texture2 texture/InterstellarWormhole_Fig10.bmp
+
+#

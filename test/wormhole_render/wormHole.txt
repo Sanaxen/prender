@@ -1,0 +1,157 @@
+IMAGE
+640 480
+
+320 240
+160 120
+
+OUTPUT
+wormHole.hdr
+
+SCREEN
+30.0 30.0 40.0
+
+#TIMELIMIT
+10000
+
+SAMPLING
+2
+
+THREAD
+5
+
+#DEPTH
+4
+
+#DEPTH_LIMIT
+4
+
+SUPERSAMPLING
+2
+
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#sphere 100001 40.8 81.6 100000
+#左
+OBJECT
+plane 0 0 0
+normal 1 0 0
+emission 0 0 0
+color 0.75 0.25 0.25
+reflection diffuse
+#normal -1
+
+#sphere -99901 40.8 81.6 100000
+#右
+OBJECT
+plane 99 0 0
+normal -1 0 0
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+#normal -1
+
+#sphere 50 40.8 100000 100000
+#奥
+OBJECT
+plane 0 0 0
+normal 0 0 1
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#sphere 50 40.8 -99750 100000
+#手前
+OBJECT
+plane 0 0 250
+normal 0 0 -1
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+#normal -1
+
+#sphere 50 100000 81.6 100000
+#床
+OBJECT
+plane 0 0 0
+normal 0 1 0
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#sphere 50 -99918.4 81.6 100000
+#天井
+OBJECT
+plane 0 81.6 0
+normal 0 -1 0
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+#normal -1
+
+#緑球
+OBJECT
+sphere 65 20 20 16.5
+emission 0 0 0
+color 0.25 0.75 0.25
+reflection diffuse
+
+#鏡
+OBJECT
+sphere 27 16.5 47 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+
+
+#照明
+OBJECT
+sphere 50 90 81.6 15
+emission 36 36 36
+color 0 0 0
+reflection diffuse
+
+
+#ガラス
+OBJECT
+sphere 77 16.5 78 16.5
+emission 0 0 0
+color 1 1 1
+reflection reflection
+
+
+#OBJECT
+#sphere 0 0 0 300000
+#emission 0 0 0
+#color 0 0 0
+#reflection diffuse
+#ibl_texture texture/bgedit.bmp
+#ibl_texture_coef 1
+#panoramic_map 1
+#normal -1
+
+
+WORMHOLE
+Rho 1.3
+a 0.5
+W 0.05
+dist 10
+geodesics_max_length 2000
+background_texture1 texture/InterstellarWormhole_Fig6b.bmp
+background_texture2 texture/InterstellarWormhole_Fig10.bmp
+map_coef1 -1 0 1 0
+map_coef2 -1 0 -1 0
+
+#InterstellarWormhole_Fig10.bmp
+
+#/Ridgecrest_Road_Ref.hdr
+

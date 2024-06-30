@@ -1,0 +1,70 @@
+IMAGE
+192 144
+
+320 240
+160 120
+
+OUTPUT
+blackHole003.hdr
+
+SCREEN
+10 10 9
+
+#TIMELIMIT
+10000
+
+SAMPLING
+1
+
+THREAD
+5
+
+DEPTH
+1
+
+DEPTH_LIMIT
+1
+
+SUPERSAMPLING
+4
+
+
+VAR X
+165
+
+VAR Y
+45
+
+VAR Z
+50
+
+VAR T
+%XX%
+
+CAMERA_POS
+X+50*cos(T*pi/180) Y+50*sin(T*pi/180) 55.0
+#X-6.5 Y Z
+
+CAMERA_DIR
+-50*cos(T*pi/180) -50*sin(T*pi/180) 0.0
+#1 0 0
+
+CAMERA_UPVEC
+0.0 0.0 1.0
+
+
+OBJECT
+disk X Y Z 35
+nromal 0 0 1
+emission 0.8 0.8 0.8
+color 0.01 0.01 0.01
+reflection diffuse
+disk_map 1
+blackhole_disk 0
+
+BLACKHOLE X Y Z
+geodesics_max_length 2000
+angular_momentum 0.5
+accretion_disk 18
+accretion_disk_texture texture/adisk0.bmp
+background_texture texture/InterstellarWormhole_Fig6b.bmp
