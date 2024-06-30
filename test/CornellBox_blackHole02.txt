@@ -1,0 +1,95 @@
+IMAGE
+640 480
+
+320 240
+160 120
+
+OUTPUT
+CornellBox_blackHole02.hdr
+
+SCREEN
+30.0 30.0 40.0
+
+#TIMELIMIT
+10000
+
+SAMPLING
+2
+
+THREAD
+5
+
+DEPTH
+3
+
+DEPTH_LIMIT
+4
+
+SUPERSAMPLING
+2
+
+#tentfilter
+1
+
+#nextEventEstimation
+1
+
+#metropolisTransport
+1
+
+#mutation
+20
+
+#pre_sample
+0.01
+
+#energyRedistributionPathTracing
+1
+
+#ERPT
+60
+
+CAMERA_POS
+220.0 52.0 55.0
+
+CAMERA_DIR
+-1.0 -0.04 0.0
+
+CAMERA_UPVEC
+0.0 0.0 1.0
+
+
+#OBJECT
+#sphere 55 20 49 4.0
+#emission 0 0 0
+#color 1 0 0
+#reflection diffuse
+
+
+
+#OBJECT
+#sphere 0 0 0 3000
+#emission 0 0 0
+#color 0 0 0
+#reflection diffuse
+#ibl_texture texture/Interstellar.bmp
+#ibl_texture_coef 1
+#panoramic_map 1
+#normal -1
+
+
+#OBJECT
+#disk 150 45 50 20
+#nromal 0 0 1
+#emission 0.9 0.8 0.8
+#color 1 1 1
+#reflection diffuse
+#disk_map 1
+#blackhole_disk 1
+
+BLACKHOLE 150 45 50
+geodesics_max_length 4000
+accretion_disk 20
+angular_momentum 0.99999
+initial_condition 0
+background_texture texture/InterstellarWormhole_Fig10.bmp

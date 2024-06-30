@@ -1,0 +1,72 @@
+IMAGE
+320 240
+
+OUTPUT
+bunny_test3.ppm
+
+SCREEN
+30.0 30.0 40.0
+
+THREAD
+4
+
+SAMPLING
+10
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+-0.001193925 0.2 0.6
+
+TARGET_POS
+-0.001193925 -0.01074532 -0.4995067
+
+CAMERA_ANGLE
+27.59727
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#îwåi
+OBJECT
+uvplane -25 -40 -70
+U 50 0 0
+V 0 50 0
+emission 0 0 0
+color 0.99 0.99 0.99
+#emission 0.051 0.051 0.051
+reflection diffuse
+texture texture/texture.bmp
+background 1
+
+#è∞
+OBJECT
+uvplane 5 -15 -25
+U 0 0 12
+V 13 0 0
+emission 0 0 0
+color 0.49 0.99 0.99
+reflection diffuse
+
+#è∆ñæ
+OBJECT
+sphere 0 450 60 180
+emission 5 5 5
+color 0 0 0
+reflection diffuse
+
+
+OBJECT
+objfile obj/bunny.obj
+smooth 1
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection reflection
+scale 1.1 1.1 1.1
+translate 0.02 -0.05 0
+rotation 0 45 0
+
+#reflection ward_brdf
+#ward_brdf 0.75 0.25 0.25
+

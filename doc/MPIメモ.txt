@@ -1,0 +1,114 @@
+MPICHのインストールと設定(Windows7場合)
+
+■MPICHのインストール
+http://www.mpich.org/ → [Download MPICH]
+Packages Included in UNIX/Windows Distributions: ->Microsoft Windows->[http]
+Unofficial Binary Packages:->[x86_64]
+※以下は「Unofficial Binary Packages」の場合（この時点ではこちらのバージョンの方が最新だった）
+
+以下の設定等でアクセス制限のダイアログが出る場合は全て「許可する」。
+
+■MPICH2の環境設定。
+これは利用するすべてのマシンで実施
+①mpich2-1.4.1p1-win-x86-64.msiを実行してインストール。
+②システム環境変数の「path」変数値の最後に「C:\Program Files\MPICH2\bin\」を追加。
+③コマンドプロンプトを管理者権限で開く
+　デーモン起動
+　smpd -install
+　
+　mpiexec -register
+　ドメイン、ユーザー名が正しければそのままEnter
+　パスワードを聞かれるのでWindowsにログインするときのパスワードを入力（2回聞かれて終了）。
+
+
+④実行環境の準備
+　各PCに同じ環境を準備する
+　作業ディレクトリを作成。例えば c:\tmp\work を各PCに用意する
+　作業ディレクトリを共有フォルダにして読み書きできるようにする（自PCも忘れずに）
+
+　ホスト定義ファイル（machinefile）を作成
+　hosts.txt
+　127.0.0.1 localhost
+　192.168.12.226 nn0063
+　192.168.12.80 nn0071
+
+　メモ：
+　デフォルトでは書いた順にランク（０～）が振られるみたい。
+　最初に実行したモジュールのホスト定義ファイルに従う。
+　mpiexec -n 2-machinefile hosts.txt  -path c:\tmp\work 実行イメージexe 引数
+  とすると自ホスト（localhost）はランク０で２個目は（実行イメージexe 引数）が（nn0063）で自動的に実行が始まる。
+
+
+⑤設定（アクセス制限の許可）
+　コントロール パネル→Windows ファイアウォール→詳細設定
+　受信の規則へ追加
+　送信の規則へ追加
+　MPICH2インストール時、smpd、mpiexecの実行時にアクセス制限のダイアログが出て許可している場合は既に追加されているはず。
+　作成した実行ファイルも初回実行ではアクセス制限のダイアログが出る場合があるがこれも許可しておく。
+　だたし、実行ファイルを他の場所にコピーした場合などは異なる実行ファイルとみなされる事があり、
+　その場合はアクセス制限のダイアログが出ないで「セマフォがタイムアウト」等のエラーや「MPI_Sendなどのエラー」が起きる事がある。
+　その場合は再度、実行すべき実行ファイルに対して上記の設定を実施。
+
+
+⑥実行方法
+　mpiexec -n 台数 -machinefile hosts.txt  -path C:\tmp\tmp_yama 実行イメージexe 引数
+
+■MPI並列化の基本プログラムの構成
+
+//初期化
+MPI_Init(&argc, &argv);
+
+//ランク毎の仕事の切り分け
+int myrank;
+MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+if ( myrank == 0)
+{
+　・・・
+}else
+{
+　・・・
+}
+
+//終了
+MPI_Finalize();
+
+（例）分散計算して親をランク０として全ての結果を親が最後に受け取って完了する場合
+//初期化
+MPI_Init(&argc, &argv);
+
+//ランク毎の仕事の切り分け
+int myrank;
+MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+if (myrank == 0)
+{
+	//分散された個数を取得
+	MPI_Comm_size(MPI_COMM_WORLD, &procnum);
+
+	//「子」つまりランク１からの結果を受け取る
+	for ( int i = 1; i < procnum; i++)
+	{
+		MPI_Status status;
+		MPI_Recv((void*)受け取るバッファ, 受け取るバイトサイズ, MPI_BYTE, i, 99, MPI_COMM_WORLD, &status);
+	}
+}
+else
+{	//「子」つまりランク１からの結果を「親」つまりランク０に送信
+	MPI_Send((void*)送るバッファ, 送るバイトサイズ, MPI_BYTE, 0, 99, MPI_COMM_WORLD);
+}
+//全部がここに来るまでは勝手に終わらないようにバリを張る
+MPI_Barrier(MPI_COMM_WORLD);
+
+//終了
+MPI_Finalize();
+
+
+■その他
+自PCのみで計算オプション
+-localonly
+
+wmpiconfig.exe
+「Domain」＝＞、Windowsのネットワークドメインが出る。
+ネットワークドメインを選択して「Get Hosts」というのをクリックすると、今つながっているマシンが一通り表示。
+「Apply All」と押して「OK」
+
+

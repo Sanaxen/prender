@@ -1,0 +1,127 @@
+THREAD
+3
+
+IMAGE
+320 240
+
+OUTPUT
+CornellBox_プリズム0.bmp
+
+SCREEN
+30.0 30.0 25.0
+
+
+SAMPLING
+30
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+50.0 60.0 220.0
+#25.0 60.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+#0.5 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#右
+OBJECT
+plane 105 0 0
+normal -1 0 0
+emission 0 0 0
+color 0.5 0.5 0.5
+reflection diffuse
+reflection specular
+
+#奥
+OBJECT
+plane 0 0 -10
+normal 0 0 1
+emission 0 0 0
+color 0.5 0.5 0.5
+reflection diffuse
+reflection specular
+
+#床
+OBJECT
+plane 0 0 0
+normal 0 1 0
+emission 0 0 0
+color 0.099 0.099 0.099
+reflection diffuse
+
+VAR A
+0
+
+#(reflection2)Optical constants of BK7 S-BSL7 (OHARA)
+#
+OBJECT
+objfile obj/p03.obj
+scale 16 16 16
+rotation 90 0 0
+#rotation 0 130 0
+rotation 0 100+A 0
+translate 35 40 133
+emission 0 0 0
+color 10 10 10
+#reflection reflection1
+#3.5139564 -2.4812508E-2 4.6252559E-2 9.1313596E-3 1.0777108E-3	1.0819677E-4
+#reflection reflection2
+#1.1515019 -1.0598413E-2 1.18583612E-1 1.1822519E-2 1.26301359 1.29617662E2
+reflection reflection
+#refractive_index  0
+reflection reflection99
+#refractive_index  1.5
+#reflection diffuse
+#normal -1
+smooth 0
+#reflection specular
+
+
+#ガラス
+#OBJECT
+sphere 77 16.5 78 13
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection reflection
+refractive_index  1.5
+
+
+#横照明
+OBJECT
+uvplane 9 0 80
+U 0 40 0
+V 1 0 0
+translate -20 -35 -70
+rotation 0 -90+A 0
+translate 20 35 70
+translate 0 5 50
+emission 40 40 40
+color 0 0 0
+reflection diffuse
+parallel_light 1
+
+#天井照明
+#OBJECT
+uvplane 50 100 81.6
+emission 10 10 10
+color 0.99 0.99 0.99
+reflection diffuse
+
+OBJECT
+sphere 50 260 81.6 10
+emission 25 25 25
+color 0.99 0.99 0.99
+reflection diffuse
+
+#横照明
+#OBJECT
+sphere 10 40 120 2.5
+emission 20 20 20
+color 0 0 0
+reflection diffuse

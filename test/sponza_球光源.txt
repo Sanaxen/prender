@@ -1,0 +1,76 @@
+#http://graphics.cs.williams.edu/data/meshes.xml
+
+IMAGE
+320 240
+
+THREAD
+4
+
+DEPTH
+8
+
+OUTPUT
+sponza_ãÖåıåπ.ppm
+
+SCREEN
+20.0 20.0 10.0
+
+
+SAMPLING
+20
+
+SUPERSAMPLING
+4
+
+CAMERA_POS
+-10 3.5 0
+
+CAMERA_DIR
+1 0.01 0.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#OBJECT
+plane 0 150 0
+normal 0 -1 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+#è∆ñæ
+OBJECT
+sphere 0 100000 0 10000
+emission 105.7 105.7 105.7
+color 0 0 0
+reflection diffuse
+
+#ìV
+OBJECT
+hemisphere 0 -7 0 1000000
+#emission 0.59 0.59 0.59
+color 0.959 0.959 0.959
+#color 0 0 0
+reflection diffuse
+texture texture/light.bmp
+hemisphere_map 1
+normal -1
+direct_normal 0 -1 0
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.02
+
+OBJECT
+plane 0 -7 0
+normal 0 1 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+OBJECT
+objfile dabrovic-sponza/sponza2.obj
+smooth 0
+emission 0 0 0
+color 0.95 0.95 0.95
+reflection diffuse
+#reflection ward_brdf
+#ward_brdf 0.75 0.75 0.75
+

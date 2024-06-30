@@ -1,0 +1,59 @@
+IMAGE
+320 240
+
+OUTPUT
+teapot2.ppm
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+20
+
+SUPERSAMPLING
+4
+
+CAMERA_POS
+2.664535E-15 -1.776357E-15 466.1884
+
+TARGET_POS
+2.664535E-15 -1.776357E-15 465.1884
+
+CAMERA_ANGLE
+27.59727
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+CAMERA_MATRIX
+rotation 0 0 -22.17598
+rotation -38.49925 0 0
+rotation 0 151.2005 0
+translate 6.9158 4.89465 -1.10805
+
+
+#è∞
+OBJECT
+sphere 50 -100040 81.6 100000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+#è∆ñæ
+OBJECT
+sphere 10 420 60 150
+emission 6 6 6
+color 0 0 0
+reflection diffuse
+
+
+OBJECT
+objfile obj/teapot.obj
+smooth 1
+emission 0 0 0
+color 0.79 0.79 0.29
+reflection diffuse
+reflection ward_brdf
+ward_brdf 0.75 0.25 0.25
+

@@ -1,0 +1,114 @@
+IMAGE
+320 240
+
+OUTPUT
+texture_test1.bmp
+
+nextEventEstimation
+1
+
+THREAD
+4
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+2
+
+SUPERSAMPLING
+1
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+#0 0.8 -1
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#左
+#OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.75 0.25 0.25
+reflection diffuse
+
+
+#右
+#OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+
+#奥
+#OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#手前
+#OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+
+#床
+OBJECT
+uvplane -500 0 -500
+U 1000 0 0
+V 0 0 1000
+emission 0 0 0
+color 0.93 0.93 0.93
+reflection diffuse
+#texture texture\texture.bmp
+bump_texture texture\KAMEN-bump.bmp
+
+#天井
+#OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#緑球
+OBJECT
+sphere 65 20 20 20
+emission 0 0 0
+color 0.25 0.75 0.25
+reflection diffuse
+
+#鏡
+OBJECT
+sphere 27 16.5 47 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+
+#照明
+OBJECT
+sphere 50 129 81.6 15
+emission 10 10 10
+color 0 0 0
+reflection diffuse
+
+#ガラス
+OBJECT
+sphere 45 1200 78 1600.5
+translate 0 -1300 0
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+ibl_texture texture\grace_probe.bmp
+#ibl_texture SkyDome.bmp
+ibl_texture_coef 3
+angular_map 1
+#hemisphere_map 1
+normal -1
+

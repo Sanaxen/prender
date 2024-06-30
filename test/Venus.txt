@@ -1,0 +1,106 @@
+IMAGE
+320 240
+
+THREAD
+4
+
+OUTPUT
+Venus.ppm
+
+SCREEN
+30.0 30.0 10.0
+
+
+SAMPLING
+2000
+
+SUPERSAMPLING
+4
+
+CAMERA_POS
+-100.0049 -180.0092 9867.059
+
+TARGET_POS
+-100.0049 -180.0092 9866.059
+
+CAMERA_ANGLE
+35.09939
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+CAMERA_MATRIX
+rotation 0 0 -0.9175312
+rotation -6.736234 0 0
+rotation 0 7.426037 0
+#translate 0.6291505 1434.352 -186.891
+
+#ìVà‰
+OBJECT
+sphere 0 106000 0 100800
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+#âúï«
+OBJECT
+sphere 0 0 -129000 125000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+#reflection diffuse
+
+#ëOï«
+OBJECT
+sphere 0 0 0 15000
+emission 0 0 0
+color 0.29 0.29 0.29
+reflection diffuse
+
+#è∞
+OBJECT
+sphere 50 -103300 81.6 100800
+emission 0 0 0
+color 0.699 0.699 0.699
+reflection diffuse
+reflection ward_brdf
+ward_brdf 0.45 0.45 0.45
+
+#è∆ñæ
+OBJECT
+sphere 0 8700 0 4000
+emission 16 16 16
+color 0 0 0
+reflection diffuse
+
+#
+OBJECT
+sphere 2000 0 3000 800
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection reflection
+
+#
+OBJECT
+sphere 1000 -2000 -2000 500
+emission 0 0 0
+color 2.99 0.0 0.0
+reflection diffuse
+
+#
+OBJECT
+sphere -2000 -1800 2000 800
+emission 0 0 0
+color 0.99 0.99 0.69
+reflection specular
+
+OBJECT
+objfile obj/venus.obj
+smooth 1
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+#reflection ward_brdf
+#ward_brdf 0.75 0.75 0.25
+translate -500 -1400 0
+

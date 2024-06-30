@@ -1,0 +1,91 @@
+THREAD
+3
+
+IMAGE
+320 240
+
+OUTPUT
+CornellBox_spectrum2.hdr
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+1000
+
+SUPERSAMPLING
+4
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#ç∂
+OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.75 0.25 0.25
+reflection diffuse
+
+
+#âE
+OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+
+#âú
+OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#éËëO
+OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+
+#è∞
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#ìVà‰
+OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#
+OBJECT
+sphere 50 40 58 30
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection reflection99
+#3.5139564 -2.4812508E-2	4.6252559E-2 9.1313596E-3 1.0777108E-3	1.0819677E-4
+
+#objfile box.obj
+#scale 27 27 27
+#translate 50 30 90
+
+
+#è∆ñæ
+OBJECT
+sphere 36 75 45 1
+emission 20 20 20
+color 0.99 0.99 0.99
+reflection diffuse
+

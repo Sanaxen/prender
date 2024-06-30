@@ -1,0 +1,98 @@
+IMAGE
+640 480
+
+
+#TIMELIMIT
+0.5
+
+THREAD
+4
+
+#DEPTH
+8
+
+OUTPUT
+san-miguel.hdr
+
+SCREEN
+20.0 20.0 10.0
+
+
+SAMPLING
+20
+
+SUPERSAMPLING
+2
+
+nextEventEstimation
+1
+
+participatingMedia
+0
+
+SCATTERING
+0.005
+0.03 0.03 0.03
+
+ABSORBING
+0.005
+0.00031 0.00031 0.00031
+
+PAHASE
+0.8
+
+CAMERA_POS
+9 1 2
+
+CAMERA_DIR
+1 0.1 0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#è∆ñæ
+#OBJECT
+sphere 0 90 0 15
+emission 36 36 36
+color 0 0 0
+reflection diffuse
+
+#è∆ñæ
+OBJECT
+uvplane -10 260 -40
+U 150 0 0
+V 0 0 150
+rotation 40 0 0
+emission 180 180 180
+color 0 0 0
+reflection diffuse
+#parallel_light 1
+#emission 200 200 200
+
+#ìV
+OBJECT
+hemisphere 0 -7 0 1000000
+emission 0.0 0.0 0.0
+color 0.0 0.0 0.0
+reflection diffuse
+ibl_texture texture/light.bmp
+ibl_texture_coef 0.5
+hemisphere_map 1
+normal -1
+
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.6
+
+
+OBJECT
+objfile san-miguel/san-miguel.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#reflection ward_brdf
+#ward_brdf 1 0.05 0.05
+

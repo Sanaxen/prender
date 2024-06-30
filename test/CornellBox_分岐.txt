@@ -1,0 +1,145 @@
+THREAD
+3
+
+#DEPTH_LIMIT
+2
+
+#DEPTH
+1
+
+IMAGE
+320 240
+
+OUTPUT
+CornellBox_分岐.bmp
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+30
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+130 30 50
+
+CAMERA_DIR
+-1 -0.1 -0.5
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+
+OBJECT
+objfile 新しいフォルダー/壁.obj
+scale 100 100 100
+smooth 0
+emission 0 0 0
+color 0.1 0.1 0.1
+reflection diffuse
+
+
+OBJECT
+objfile 新しいフォルダー/ミラー.obj
+scale 100 100 100
+smooth 0
+emission 0 0 0
+color 1 1 1
+specular 1 1 1
+reflection specular
+
+
+#OBJECT
+objfile 新しいフォルダー/プリズム.obj
+scale 100 100 100
+smooth 0
+emission 0 0 0
+color 1 1 1
+specular 1 1 1
+reflection reflection99
+
+#reflection reflection2
+#1.03961212 0.00600069867 0.231792344 0.0200179144 1.01046945 103.560653
+
+#reflection reflection99
+
+
+VAR h
+0
+
+OBJECT
+objfile 新しいフォルダー/スリット1.obj
+scale 100 100 100
+translate 0 0 -4+h
+smooth 0
+emission 0 0 0
+color 0.1 0.1 0.1
+reflection diffuse
+
+OBJECT
+objfile 新しいフォルダー/スリット2.obj
+scale 100 100 100
+translate 0 0 -5+h
+smooth 0
+emission 0 0 0
+color 0.1 0.1 0.1
+reflection diffuse
+
+#
+
+#床
+OBJECT
+plane 0 0 0
+normal 0 1 0
+emission 0 0 0
+color 1 1 1
+reflection diffuse
+
+#OBJECT
+sphere 50 0 10 5
+emission 0 0 0
+color 1 1 1
+reflection diffuse
+
+#横照明
+OBJECT
+uvplane 70 0 6+h
+U 0 0 1
+V 0 10 0
+emission 100 100 100
+color 0 0 0
+reflection diffuse
+parallel_light 1
+
+
+#OBJECT
+uvplane -5000 5000 -5000
+U 10000 0 0
+V 0 0 10000
+emission 0.3 0.3 0.3
+color 0 0 0
+reflection diffuse
+parallel_light 0
+
+#parallel_light 1
+#parallel_light_dir 0 -1 0
+
+
+#OBJECT
+objfile obj/cap.obj
+smooth 1
+rotation -90 0 0
+scale 1600.5 1600.5 1600.5
+translate 45 -1200 78
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+ibl_texture texture/grace_probe.bmp
+#ibl_texture texture/SkyDome.bmp
+#ibl_texture_coef 0.5
+normal -1
+

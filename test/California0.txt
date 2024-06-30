@@ -1,0 +1,107 @@
+IMAGE
+640 480
+
+320 240
+160 120
+
+OUTPUT
+California0.bmp
+
+SCREEN
+30.0 30.0 40.0
+
+#TIMELIMIT
+10000
+
+SAMPLING
+1250
+
+THREAD
+7
+
+SUPERSAMPLING
+2
+
+tentfilter
+1
+
+nextEventEstimation
+1
+
+#metropolisTransport
+1
+
+#mutation
+5
+
+#energyRedistributionPathTracing
+1
+
+#ERPT
+60
+
+CAMERA_POS
+0 1 -335
+
+CAMERA_DIR
+0.1 0 1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#è∆ñæ
+#OBJECT
+sphere 0 290 0 15
+emission 36 36 36
+color 0 0 0
+reflection diffuse
+
+OBJECT
+plane 0 -77 0
+normal 0 1 0
+color 0.5 0.5 0.5
+reflection diffuse
+
+#OBJECT
+uvplane -2000 -77 -2000
+U 0 0 4000
+V 4000 0 0
+normal 0 1 0
+color 1 1 1
+reflection diffuse
+ibl_texture California/jardinera_2_bump.bmp
+
+OBJECT
+objfile California/untitled.obj
+scale 55 55 55
+translate 0 -35 20
+rotation 0 80+50 0
+smooth 1
+emission 0 0 0
+color 0.65 0.65 0.65
+reflection diffuse
+
+#OBJECT
+sphere 0 0 0 10660
+translate 0 570 0
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+ibl_texture texture/uffizi_probe.hdr
+#ibl_texture SkyDome.bmp
+ibl_texture_coef 1
+angular_map 1
+normal -1
+
+OBJECT
+sphere 0 -70 0 600
+translate 0 -100 0
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+#ibl_texture C:\Users\neutral\Desktop\yamato\ÉåÉìÉ_Éâ\Skydome-master\Skydome-master\Skydome\x64\Release\sky70.bmp
+ibl_texture texture/SkyDome.bmp
+ibl_texture_coef 1
+#angular_map 1
+hemisphere_map 1
+normal -1

@@ -1,0 +1,68 @@
+IMAGE
+320 240
+
+OUTPUT
+lucy.ppm
+
+SCREEN
+30.0 30.0 10.0
+
+
+SAMPLING
+200
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+0 0 74.90724
+
+TARGET_POS
+0 0 74.90724
+
+CAMERA_ANGLE
+38.14435
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+CAMERA_MATRIX
+rotation 0 0 125.7853
+rotation -76.20709 0 0
+rotation 0 50.95152 0
+translate 13.81414 -2.387787 4.13798
+
+#è∞
+OBJECT
+plane 0 0 0
+normal 0 1 0
+emission 0 0 0
+color 0.5 0.5 0.5
+reflection diffuse
+reflection ward_brdf
+ward_brdf 0.75 0.25 0.25
+
+#ìV
+OBJECT
+hemisphere 45 200 78 600.5
+translate 0 -200 0
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+ibl_texture texture/grace_probe.bmp
+#ibl_texture texture/SkyDome.bmp
+ibl_texture_coef 0.99
+hemisphere_map 1
+normal -1
+
+
+OBJECT
+objfile obj/lucy.obj
+smooth 1
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+#reflection ward_brdf
+#ward_brdf 0.75 0.75 0.25
+translate -500 -1400 0
+

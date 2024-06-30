@@ -1,0 +1,122 @@
+IMAGE
+640 480
+#320 240
+#160 120
+
+OUTPUT
+CornellBox_SSSìßñæ3.bmp
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+600
+
+THREAD
+3
+
+SUPERSAMPLING
+8
+
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#ç∂
+OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.75 0.25 0.25
+reflection diffuse
+
+
+#âE
+OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+
+#âú
+OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#éËëO
+OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+
+#è∞
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#ìVà‰
+OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+
+#è∆ñæ
+OBJECT
+sphere 50 90 81.6 15
+emission 36 36 36
+color 0 0 0
+reflection diffuse
+
+
+#â©ãÖ
+OBJECT
+sphere 65 15 20 15
+emission 0 0 0
+color 0.75 0.75 0.25
+reflection diffuse
+
+#ê¬ãÖ
+OBJECT
+sphere 27 7 20 7
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+
+
+#Subsurface_Scattering
+OBJECT
+sphere 40 23 78 23
+emission 0 0 0
+color 1 1 1
+reflection reflection
+refractive_index  1.0
+r_refractive_index  1.0
+#reflection diffuse
+reflection Subsurface_Scattering
+SCATTERING
+0.001
+0.0000003 0.0000003 0.0000003
+ABSORBING
+0.002
+0.0000003 0.0000003 0.0000003
+PAHASE
+0
+
+OBJECT
+sphere 40 23 78 10
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular

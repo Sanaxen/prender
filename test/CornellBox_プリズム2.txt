@@ -1,0 +1,212 @@
+THREAD
+3
+
+#DEPTH_LIMIT
+2
+
+#DEPTH
+1
+
+IMAGE
+320 240
+
+OUTPUT
+CornellBox_プリズム2.bmp
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+30
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+-380.0 60.0 560.0
+#60.0 60.0 720.0
+
+CAMERA_DIR
+0.7 -0.05 -1.0
+#0.01 -0.05 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#右
+OBJECT
+plane 150 0 0
+normal 1 0 0
+emission 0 0 0
+color 1 1 1
+reflection diffuse
+color 0.101 0.101 0.101
+specular 0.1 0.1 0.1
+
+
+#specular 0.1 0.1 0.1
+#reflection phong_brdf
+#phong_brdf 0 1 1000
+
+#reflection specular
+#reflection ward_brdf
+#ward_brdf 0 1 0.5 0.5
+
+
+#左
+#OBJECT
+plane -150 0 0
+normal -1 0 0
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+#奥
+OBJECT
+plane 0 0 -150
+normal 0 0 1
+emission 0 0 0
+color 0.99 0.99 0.99
+color 0.05 0.05 0.05
+reflection diffuse
+
+specular 0.1 0.1 0.1
+reflection phong_brdf
+phong_brdf 0 1 1000
+
+OBJECT
+sphere 95 20 -115 5
+color 0.99 0.19 0.19
+reflection diffuse
+
+OBJECT
+sphere -10 20 145 5
+color 0.19 10.99 0.19
+reflection diffuse
+
+#床
+OBJECT
+plane 0 0 0
+normal 0 1 0
+emission 0 0 0
+color 1 1 1
+reflection diffuse
+
+#反射障害テスト面
+OBJECT
+uvplane 140 0 135
+U 300 0 0
+V 0 60 0
+translate 280 -0 -135
+rotation 0 45 0
+translate -280 0 135
+translate 0 0 250
+emission 0 0 0
+color 1 1 1
+reflection specular
+
+#reflection diffuse
+
+#reflection specular
+
+#reflection diffuse
+
+
+#reflection reflection
+#refractive_index  1
+
+#reflection reflection
+#refractive_index  1
+
+#reflection specular
+
+
+
+#reflection diffuse
+
+#reflection reflection
+
+#reflection specular
+
+#reflection diffuse
+#reflection specular
+
+
+#(reflection2)Optical constants of BK7 S-BSL7 (OHARA)
+#
+#OBJECT
+objfile obj/p03.obj
+scale 20 20 20
+rotation 90 0 0
+rotation 0 180+30 0
+translate 50 20 135
+smooth 0
+color 2 2 2
+reflection reflection
+reflection reflection99
+
+#reflection specular
+
+
+
+#reflection reflection1
+#3.5139564 -2.4812508E-2 4.6252559E-2 9.1313596E-3 1.0777108E-3	1.0819677E-4
+#reflection reflection2
+#1.1515019 -1.0598413E-2 1.18583612E-1 1.1822519E-2 1.26301359 1.29617662E2
+
+
+#refractive_index  1.5
+#normal -1
+#reflection specular
+
+
+#横照明
+OBJECT
+uvplane 50 5 250
+U 0 80 0
+V 10 0 0
+translate -50 -5 -200
+rotation 0 0 0
+translate 50 5 200
+translate 0 0 0
+emission 1 1 1
+color 0 0 0
+reflection diffuse
+
+#parallel_light 1
+
+#OBJECT
+sphere 50 260 81.6 10
+emission 5 5 5
+color 0 0 0
+reflection diffuse
+
+OBJECT
+uvplane -5000 5000 -5000
+U 10000 0 0
+V 0 0 10000
+emission 0.3 0.3 0.3
+color 0 0 0
+reflection diffuse
+parallel_light 1
+
+#parallel_light 1
+#parallel_light_dir 0 -1 0
+
+
+OBJECT
+objfile obj/cap.obj
+smooth 1
+rotation -90 0 0
+scale 1600.5 1600.5 1600.5
+translate 45 -1200 78
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+#ibl_texture texture/grace_probe.bmp
+ibl_texture texture/SkyDome.bmp
+ibl_texture_coef 0.5
+normal -1
+

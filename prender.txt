@@ -1,0 +1,267 @@
+■出力画像の設定
+
+IMAGE
+画像ピクセル幅 画像ピクセル高さ
+
+環境変数IMAGE_Xが設定されていれば横方向のサイズは環境変数の設定を優先する。
+環境変数IMAGE_Yが設定されていれば縦方向のサイズは環境変数の設定を優先する。
+
+OUTPUT
+出力画像ファイル名
+
+-ファイル名は拡張子 .ppm .bmp .hdr に対応
+　BMPは必ず出力する
+　出力ファイル名にはサンプリング数xスーパーサンプリング数が付加される。
+
+SCREEN
+x y z
+
+-レンダリング時のスクリーン中心座標
+
+■カメラ設定
+
+CAMERA_POS
+x y z
+
+-カメラの位置
+
+CAMERA_UPVEC
+x y z
+
+-カメラのUPベクトル
+
+CAMERA_DIR
+x y z
+
+-カメラの方向ベクトル
+
+CAMERA_DIRを指定しない場合
+
+	TARGET_POS
+	x y z
+
+	-カメラから見る位置
+
+	CAMERA_ANGLE
+	θ
+
+	-カメラから見る視界（水平角度）
+
+CAMERA_MATRIX
+マトリクス定義
+
+-カメラを指定のマトリクスで姿勢を変更
+　以下の定義文が指定できる。
+
+■マトリクス定義
+rotation θx θy θz  
+-各軸の回転角度（度）
+
+translate x y z
+-各軸の移動量
+
+scale x y z
+-各方向の拡大縮小率
+
+■サンプリング
+SAMPLING
+n
+-サンプリング数。
+ 環境変数SAMPLINGが設定されていれば環境変数の設定を優先する。
+
+SUPERSAMPLING
+n
+-スーパーサンプリング数
+ 環境変数SUPERSAMPLINGが設定されていれば環境変数の設定を優先する。
+
+■並列処理
+
+THREAD
+n
+-並列実行数
+
+■Next Event Estimation
+nextEventEstimation
+値
+-値が０の時はNext Event Estimationを行わない。
+ 環境変数NEXTEVENTESTIMATIONが設定されていれば環境変数の設定を優先する。
+
+
+■関与媒質
+participatingMedia
+値
+-値が０の時は関与媒質を無視する。
+
+SCATTERING
+σs平均（ダミー）
+σs[R] σs[G] σs[B]
+-散乱係数[1/m]
+
+ABSORBING
+σa平均（ダミー）
+σa[R] σa[G] σa[B]
+-吸収係数[1/m]
+
+PAHASE
+位相関数
+-一様散乱の場合:0
+ 現在一様散乱のみ
+
+
+■オブジェクト定義
+
+OBJECT
+形状定義
+材質定義
+
+
+
+■形状定義
+sphere x y z r
+-(x,y,z)を中心とした半径rの球
+
+hemisphere x y z r
+-(x,y,z)を中心とした半径rの半球
+ Y方向上半分を定義
+
+uvplane x y z
+U ux uy uz
+V vx vy vz
+-(x,y,z)を原点とする有限平面
+　ローカルX軸(ux, uy, uz)
+　ローカルY軸(vx, vy, vz)
+
+plane x y z
+normal nx ny nz
+-(x,y,z)を通る法線ベクトル(nx,ny,nz)の無限平面
+
+
+objfile ファイル名
+-OBJ形式のメッシュデータ
+
+
+■属性定義
+
+属性定義は重複して設定してもよいが最後の指定が有効になる。
+
+■材質定義
+color r g b
+-反射光
+
+emission r g b
+-発光
+
+specular r g b
+-反射光(Wardの反射モデルで参照)
+
+
+roughness r
+-表面粗さ(0～1)
+
+■反射率分布関数（BRDF)
+reflection diffuse
+-拡散反射(roughnessは1.0が初期値)
+
+reflection specular
+-鏡面反射(roughnessは0.0が初期値)
+
+reflection reflection
+-反射・屈折
+
+reflection ward_brdf
+ward_brdf s αx αy
+-Wardの反射モデル
+ s=specular成分
+または
+ward_brdf αx αy
+この場合は反射はspecularが参照される。
+
+■屈折率定義
+refractive_index r
+-屈折率r 
+
+reflection reflection1
+a b c d e f
+
+reflection reflection2
+a b c d e f
+
+■表面下散乱
+reflection Subsurface_Scattering
+
+SCATTERING
+σs平均（ダミー）
+σs[R] σs[G] σs[B]
+-散乱係数[1/m]
+
+ABSORBING
+σa平均（ダミー）
+σa[R] σa[G] σa[B]
+-吸収係数[1/m]
+
+PAHASE
+位相関数
+-一様散乱の場合:0
+ 現在一様散乱のみ
+
+■テクスチャ
+texture テクスチャファイル名
+-テクスチャ。　BMPファイル
+ メッシュではUVの指定が必要。
+
+■IBL
+ibl_texture テクスチャファイル名
+-IBLの定義。BMPファイルまたはHDRファイル
+ メッシュではUVの指定が必要。
+
+
+ibl_texture_coef c
+-IBLの値に掛ける係数
+
+IBLを設定するオブジェクトのColor,emittionはゼロを設定する事。
+
+circle_map f
+-マッピングを画像中心から円盤状にマップするかどうか(0または1)
+ メッシュには適用されない。
+
+
+■メッシュ
+normal f
+-法線を反転するかどうか
+
+smooth f
+-メッシュモデルの法線を滑らかに補間するかどうか(0または1)
+
+
+■その他
+OBJファイルのマテリアル定義
+Kd r g b
+-color r g b と解釈します。
+
+map_Kd テクスチャファイル名
+-テクスチャファイルは24ビット・ビットマップファイルのみ
+ newmtlで指定されたマテリアルのテクスチャとなります。
+ texture で指定されている場合はこちらのテクスチャを優先します。
+ color、specularに色が乗算されます。
+
+OBJファイルのマテリアル定義拡張
+#REFLECTION r
+-反射率分布関数（BRDF)の指定
+
+#COLOR r g b
+-反射光
+
+#WARD αx αy
+-Wardの反射モデル
+
+#SPECULAR r g b
+-鏡面反射(Wardの反射モデルで参照)
+
+#ROUGHNESS r
+-表面粗さ(0～1)
+
+■時間制限
+ 環境変数TIMELIMITが設定されていれば環境変数の値（時間）でレンダリングを終了する。
+また、レンダリング結果も１分で実行した場合の結果を１分毎に出力する。
+時間制限が無い場合はレンダリング結果は１分で処理できた所を１分毎に出力する。
+

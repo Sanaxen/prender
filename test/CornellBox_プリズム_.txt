@@ -1,0 +1,141 @@
+THREAD
+4
+
+IMAGE
+320 240
+
+OUTPUT
+CornellBox_プリズム.bmp
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+30
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+50.0 70.0 220.0
+
+CAMERA_DIR
+0.0 -0.1 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#左
+OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+normal -1
+
+
+#右
+OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+normal -1
+
+
+#奥
+OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+normal -1
+
+
+#手前
+#OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+normal -1
+
+
+#床
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.099 0.099 0.099
+reflection diffuse
+normal -1
+
+
+#天井
+OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.099 0.099 0.099
+reflection diffuse
+normal -1
+
+
+#
+OBJECT
+objfile obj/p03.obj
+scale 20 20 20
+rotation 90 0 0
+rotation 0 90 0
+translate 50 40 120
+emission 0 0 0
+color 2 2 2
+reflection reflection
+reflection reflection99
+#refractive_index  1.5
+#reflection reflection1
+#3.5139564 -2.4812508E-2 4.6252559E-2 9.1313596E-3 1.0777108E-3	1.0819677E-4
+#reflection diffuse
+#normal -1
+smooth 0
+#reflection specular
+
+#objfile box.obj
+#scale 27 27 27
+#translate 50 30 90
+
+#ガラス
+#OBJECT
+sphere 77 16.5 78 13
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection reflection
+refractive_index  1.5
+
+
+#横照明
+OBJECT
+uvplane 20 35 70
+U 0 2 0
+V 2 0 0
+translate -20 -35 -70
+rotation 0 0 0
+translate 20 35 70
+translate 27 0 80
+emission 5 5 5
+color 0 0 0
+reflection diffuse
+parallel_light 1
+
+#天井照明
+OBJECT
+sphere 50 160 81.6 10
+emission 5 5 5
+color 0.99 0.99 0.99
+reflection diffuse
+
+#横照明
+#OBJECT
+sphere 10 40 120 2.5
+emission 20 20 20
+color 0 0 0
+reflection diffuse

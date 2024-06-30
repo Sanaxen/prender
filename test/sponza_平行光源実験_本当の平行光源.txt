@@ -1,0 +1,74 @@
+#http://graphics.cs.williams.edu/data/meshes.xml
+
+IMAGE
+1280 960
+640 480
+320 240
+
+THREAD
+4
+
+#DEPTH
+8
+
+OUTPUT
+sponza_平行光源実験_本当の平行光源.bmp
+
+SCREEN
+20.0 20.0 10.0
+
+
+SAMPLING
+4
+
+SUPERSAMPLING
+2
+
+
+CAMERA_POS
+-10 1.5 2
+
+CAMERA_DIR
+1 0.01 0.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#照明
+OBJECT
+uvplane -30 160 -10
+U 50 0 0
+V 0 0 50
+rotation 10 0 0
+emission 1.3 1.3 1.3
+color 0 0 0
+reflection diffuse
+parallel_light 1
+
+#天
+OBJECT
+hemisphere 0 -7 0 10000000
+emission 0.0 0.0 0.0
+color 0.0 0.0 0.0
+reflection diffuse
+ibl_texture texture/light.bmp
+ibl_texture_coef 1.5
+hemisphere_map 1
+normal -1
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.6
+
+
+OBJECT
+objfile dabrovic-sponza/sponza2.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.95 0.95 0.95
+reflection diffuse
+
+#reflection ward_brdf
+#ward_brdf 1 0.05 0.05
+

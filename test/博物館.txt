@@ -1,0 +1,91 @@
+IMAGE
+1280 960
+640 480
+320 240
+
+#TIMELIMIT
+0.5
+
+THREAD
+6
+
+#DEPTH
+8
+
+OUTPUT
+îéï®äŸ.hdr
+
+SCREEN
+20.0 20.0 10.0
+
+
+SAMPLING
+4
+
+SUPERSAMPLING
+2
+
+participatingMedia
+0
+
+SCATTERING
+0.005
+0.01 0.01 0.01
+
+ABSORBING
+0.005
+0.0031 0.0031 0.0031
+
+CAMERA_POS
+0 0 -18
+
+CAMERA_DIR
+1 0.00 0.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#è∆ñæ
+OBJECT
+uvplane -30 300 -20
+U 200 0 0
+V 0 0 35
+rotation 35 0 0
+emission 100 100 100
+color 0 0 0
+reflection diffuse
+
+
+#ìV
+OBJECT
+hemisphere 20 -25 -15 1000000
+emission 0.0 0.0 0.0
+color 0.0 0.0 0.0
+reflection diffuse
+ibl_texture texture/light.bmp
+ibl_texture_coef 1.7
+hemisphere_map 1
+normal -1
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.6
+
+
+OBJECT
+objfile Natural_History_OBJ/museumhallRD2.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.65 0.65 0.65
+reflection diffuse
+refractive_index 0.9
+
+#reflection ward_brdf
+#ward_brdf 1 0.05 0.05
+
+#OBJECT
+sphere 20 10 -18 2
+emission 50.0 50.0 50.0
+color 0.0 0.0 0.0
+reflection diffuse

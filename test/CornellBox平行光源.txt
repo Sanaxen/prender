@@ -1,0 +1,138 @@
+IMAGE
+#640 480
+320 240
+160 120
+
+OUTPUT
+CornellBox平行光源.bmp
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+50
+
+THREAD
+3
+
+SUPERSAMPLING
+2
+
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+nextEventEstimation
+1
+
+participatingMedia
+0
+
+
+SCATTERING
+0.005
+0.0015 0.0015 0.0015
+
+ABSORBING
+0.005
+0.0003 0.0003 0.0003
+
+PAHASE
+0.5
+
+#左
+OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.75*0.3 0.25*0.3 0.25*0.3
+reflection diffuse
+normal -1
+
+#右
+OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.25*0.3 0.25*0.3 0.75*0.3
+reflection diffuse
+normal -1
+
+#奥
+OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75*0.3 0.75*0.3 0.75*0.3
+reflection diffuse
+normal -1
+
+#手前
+OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+normal -1
+
+#床
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.75*0.3 0.75*0.3 0.75*0.3
+reflection diffuse
+normal -1
+
+#天井
+OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.75*0.3 0.75*0.3 0.75*0.3
+reflection diffuse
+normal -1
+
+#緑球
+OBJECT
+sphere 65 20 20 20
+emission 0 0 0
+color 0.25 0.75 0.25
+reflection diffuse
+
+#黄球
+OBJECT
+sphere 45 35 75 13
+emission 0 0 0
+color 0.75 0.75 0.25
+reflection diffuse
+
+#鏡
+OBJECT
+sphere 27 16.5 47 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+
+#照明
+OBJECT
+uvplane 40 81 70
+U 5 0 0
+V 0 0 5
+emission 5 5 5
+color 0 0 0
+reflection diffuse
+parallel_light 1
+parallel_light_dir 0 -1 0
+
+
+
+#ガラス
+OBJECT
+sphere 77 16.5 78 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection reflection
+

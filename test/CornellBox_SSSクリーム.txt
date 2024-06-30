@@ -1,0 +1,107 @@
+IMAGE
+320 240
+
+THREAD
+4
+
+OUTPUT
+CornellBox_SSSクリーム.bmp
+
+
+SCREEN
+30.0 30.0 40.0
+
+#DEPTH_LIMIT
+200
+
+SAMPLING
+100
+
+SUPERSAMPLING
+2
+
+
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#左
+OBJECT
+sphere 100001 40.8 81.6 100000
+emission 0 0 0
+color 0.75 0.25 0.25
+reflection diffuse
+
+
+#右
+OBJECT
+sphere -99901 40.8 81.6 100000
+emission 0 0 0
+color 0.25 0.25 0.75
+reflection diffuse
+
+#奥
+OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#手前
+OBJECT
+sphere 50 40.8 -99750 100000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+
+#床
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+#天井
+OBJECT
+sphere 50 -99918.4 81.6 100000
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+##{ "Cream", { 7.38, 5.47, 3.15 }, { 0.0002, 0.0028, 0.0163 }, },
+
+#Subsurface_Scattering
+OBJECT
+sphere 50 20 78 20
+emission 0 0 0
+color 1 1 1
+reflection reflection
+refractive_index 1.3
+r_refractive_index 1.3
+#reflection diffuse
+reflection Subsurface_Scattering
+MATERIAL_SYMBOL
+Cream
+MATERIAL_SCALE
+0.1
+PAHASE
+0
+level
+-1
+
+
+
+#照明
+OBJECT
+sphere 50 90 81.6 15
+emission 36 36 36
+#emission 5 5 5
+color 0 0 0
+reflection diffuse
+

@@ -1,0 +1,68 @@
+IMAGE
+320 240
+
+OUTPUT
+texture_test.ppm
+
+SCREEN
+30.0 30.0 40.0
+
+
+SAMPLING
+40
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+-0.001193925 -0.01074532 0.5004933
+
+TARGET_POS
+-0.001193925 -0.01074532 -0.4995067
+
+CAMERA_ANGLE
+27.59727
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+CAMERA_MATRIX
+rotation 0 0 2.571384
+rotation -30.6226 0 0
+rotation 0 -32.60397 0
+translate -0.0168405 0.110154 -0.001537
+
+
+#è∞
+#OBJECT
+sphere 50 -100000 81.6 100000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+#è∞
+#OBJECT
+plane 0 -15 0
+normal 0 1 0
+emission 0 0 0
+color 0.99 0.49 0.49
+reflection diffuse
+
+#è∞
+OBJECT
+uvplane 5 -15 -25
+U 0 0 12
+V 13 0 0
+emission 0 0 0
+color 0.49 0.99 0.99
+reflection diffuse
+texture texture/texture.bmp
+
+
+#è∆ñæ
+OBJECT
+sphere 0 420 60 150
+emission 5 5 5
+color 0 0 0
+reflection diffuse
+

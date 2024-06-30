@@ -1,0 +1,75 @@
+IMAGE
+320 240
+
+BACKGROUND
+1 0 0
+
+OUTPUT
+CornellBox_background2.ppm
+
+SCREEN
+30.0 30.0 40.0
+
+THREAD
+2
+
+SAMPLING
+20
+
+SUPERSAMPLING
+2
+
+CAMERA_POS
+50.0 52.0 220.0
+
+CAMERA_DIR
+0.0 -0.04 -1.0
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+#âú
+#OBJECT
+sphere 50 40.8 100000 100000
+emission 0 0 0
+color 0.75 0.75 0.25
+reflection diffuse
+
+
+#è∞
+OBJECT
+sphere 50 100000 81.6 100000
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection diffuse
+
+
+#óŒãÖ
+OBJECT
+sphere 65 20 20 20
+emission 0 0 0
+color 0.25 0.75 0.25
+reflection diffuse
+
+#ãæ
+OBJECT
+sphere 27 16.5 47 16.5
+emission 0 0 0
+color 0.99 0.99 0.99
+reflection specular
+
+#è∆ñæ
+OBJECT
+sphere 50 290 81.6 70
+emission 5 5 5
+color 0 0 0
+reflection diffuse
+
+
+#ÉKÉâÉX
+OBJECT
+sphere 77 16.5 78 16.5
+emission 0 0 0
+color 0.99 0.99 0.99 
+reflection reflection
+

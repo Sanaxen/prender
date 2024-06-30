@@ -1,0 +1,92 @@
+IMAGE
+640 480
+
+
+#TIMELIMIT
+0.5
+
+THREAD
+5
+
+#DEPTH
+8
+
+OUTPUT
+sponza_ïΩçsåıåπé¿å±3.hdr
+
+SCREEN
+20.0 20.0 10.0
+
+
+SAMPLING
+10
+
+SUPERSAMPLING
+4
+
+nextEventEstimation
+1
+
+participatingMedia
+1
+
+SCATTERING
+0.005
+0.026 0.026 0.026
+
+ABSORBING
+0.005
+0.00031 0.00031 0.00031
+
+PAHASE
+0.3
+
+CAMERA_POS
+-13.5 8 -5
+
+CAMERA_DIR
+1 -0.1 0.5
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#è∆ñæ
+OBJECT
+uvplane -10 260 -40
+U 150 0 0
+V 0 0 150
+rotation 40 0 0
+emission 180000 180000 180000
+color 0 0 0
+reflection diffuse
+#parallel_light 1
+#emission 200 200 200
+
+#ìV
+#OBJECT
+hemisphere 0 -7 0 10000000
+emission 0.0 0.0 0.0
+color 0.0 0.0 0.0
+reflection diffuse
+ibl_texture texture/light.bmp
+ibl_texture_coef 3
+hemisphere_map 1
+normal -1
+
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.6
+
+
+OBJECT
+objfile dabrovic-sponza/sponza2.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.55 0.55 0.55
+reflection diffuse
+
+#reflection ward_brdf
+#ward_brdf 1 0.05 0.05
+
