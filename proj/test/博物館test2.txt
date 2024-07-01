@@ -1,0 +1,132 @@
+IMAGE
+1280 960
+640 480
+320 240
+
+#TIMELIMIT
+0.5
+
+THREAD
+20
+
+#DEPTH
+8
+
+OUTPUT
+îéï®äŸtest.hdr
+
+SCREEN
+20.0 20*1.3333 17
+
+
+SAMPLING
+400
+
+SUPERSAMPLING
+2
+
+nextEventEstimation
+1
+
+participatingMedia
+1
+
+SCATTERING
+0.002
+0.0025 0.0025 0.0025
+
+ABSORBING
+0.005
+0.00002 0.00002 0.00002
+
+PAHASE
+0.9
+
+CAMERA_POS
+-20.5 -0.5 -20
+
+CAMERA_DIR
+1 -0.2 0.2
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#è∆ñæ
+#uvplane -30 60 -15
+#OBJECT
+#uvplane -50 50 -35
+#U 200 0 0
+#V 0 0 50
+#rotation 37 0 0
+#emission 15 15 15
+#color 0 0 0
+#reflection diffuse
+#parallel_light 1
+
+#infinity_light 0.000000 -0.798636 -0.601815
+OBJECT
+infinity_light 0.000000 -0.8 -0.5
+emission 5 5 5
+color 0.0 0.0 0.0
+reflection diffuse
+
+
+#ìV
+OBJECT
+hemisphere 20 -25 -15 1000
+emission 0.0 0.0 0.0
+color 0.0 0.0 0.0
+reflection diffuse
+ibl_texture SkyDome.bmp
+ibl_texture_coef 2
+hemisphere_map 1
+normal -1
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.6
+
+OBJECT
+uvplane -50 -11.5 -50
+V 100 0 0
+U 0 0 100
+color 0.1 0.1 0.1
+specular 0.95 0.95 0.95
+#reflection diffuse
+reflection phong_brdf
+phong_brdf 0 1 128
+texture Natural_History_OBJ/floor.bmp
+#bump_texture Natural_History_OBJ/imagesEG418GIU_bump.bmp
+
+OBJECT
+objfile Natural_History_OBJ/test3.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+media_ignore_front_back 1
+
+OBJECT
+objfile Natural_History_OBJ/test3light1.obj
+smooth 0
+back 0
+emission 20 16 2
+color 0 0 0
+reflection diffuse
+media_ignore_front_back 1
+
+OBJECT
+objfile Natural_History_OBJ/test3light2.obj
+smooth 0
+back 0
+emission 20 16 2
+color 0 0 0
+reflection diffuse
+media_ignore_front_back 1
+
+#OBJECT
+sphere 0 10 -13 3
+emission 105.0 105.0 105.0
+color 0.0 0.0 0.0
+reflection diffuse

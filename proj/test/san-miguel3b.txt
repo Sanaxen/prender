@@ -1,0 +1,114 @@
+IMAGE
+402 600
+
+
+#TIMELIMIT
+0.5
+
+THREAD
+19
+
+#DEPTH
+8
+
+OUTPUT
+san-miguel3b.hdr
+
+VAR a
+2
+
+SCREEN
+a*2 a*2 a
+
+SCREEN
+60.0 60.0 30.0
+
+SAMPLING
+20
+
+SUPERSAMPLING
+2
+
+nextEventEstimation
+1
+
+participatingMedia
+0
+
+SCATTERING
+0.005
+0.03 0.03 0.03
+
+ABSORBING
+0.005
+0.00031 0.00031 0.00031
+
+PAHASE
+0.8
+
+#-X<==> X+
+# Å™+Y
+# Å´-Y
+# +ZéËëO -Zâú
+CAMERA_POS
+-2.23 1.85 27.2
+
+
+CAMERA_DIR
+0.3 0.0 -1
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#è∆ñæ
+#OBJECT
+#sphere 0 90 0 15
+#emission 36 36 36
+#color 0 0 0
+#reflection diffuse
+
+#è∆ñæ
+#OBJECT
+#uvplane -30 200 -200
+#U 200 0 0
+#V 0 0 250
+#rotation 5 0 40
+#emission 4 4 4
+#color 0 0 0
+#reflection diffuse
+#parallel_light 1
+
+OBJECT
+infinity_light 1 -1.5 -0.4
+emission 1 1 1
+color 0.0 0.0 0.0
+reflection diffuse
+
+#ìV
+OBJECT
+hemisphere 0 -7 0 1000000
+emission 0.0 0.0 0.0
+color 0.0 0.0 0.0
+reflection diffuse
+ibl_texture texture/SkyDome.bmp
+ibl_texture_coef 12
+hemisphere_map 1
+normal -1
+
+
+#ibl_texture texture/light.bmp
+#ibl_texture_coef 0.6
+
+
+OBJECT
+objfile sanMiguel/untitled.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.7 0.7 0.7
+reflection diffuse
+
+#reflection ward_brdf
+#ward_brdf 1 0.05 0.05
+

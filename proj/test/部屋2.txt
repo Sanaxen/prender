@@ -1,0 +1,130 @@
+IMAGE
+1280 960
+640 480
+320 240
+
+#TIMELIMIT
+0.5
+
+THREAD
+19
+
+DEPTH
+400
+
+DEPTH_LIMIT
+100
+
+OUTPUT
+ïîâÆ2.hdr
+
+SCREEN
+20.0 20.0 10.0
+
+
+SAMPLING
+4
+
+SUPERSAMPLING
+2
+
+nextEventEstimation
+1
+
+participatingMedia
+0
+
+SCATTERING
+0.005
+0.01 0.01 0.01
+
+ABSORBING
+0.005
+0.0003 0.0003 0.0003
+
+PAHASE
+0.9
+
+CAMERA_POS
+30 70 200
+
+CAMERA_DIR
+-0.1 0 -1
+
+CAMERA_UPVEC
+0.0 1.0 0.0
+
+
+#background_texture texture/Tropical_Beach_3k.hdr
+#map_coef -1 0 1 pi
+#coef 2.0
+
+
+#è∆ñæ
+#OBJECT
+#uvplane -900 -230 -200
+#U 0 0 600
+#V 0 550 0
+#rotation 0 0 -25
+#emission 1 1 1
+#color 0 0 0
+#reflection diffuse
+#parallel_light 1
+#normal -1
+
+OBJECT
+infinity_light 0.906308 -0.422618 -0.000000
+emission 1 1 1
+color 0 0 0
+reflection diffuse
+
+#ìV
+#OBJECT
+#hemisphere 20 -500 -15 2000
+#emission 0.0 0.0 0.0
+#color 0.0 0.0 0.0
+#reflection diffuse
+#ibl_texture SkyDome.bmp
+#ibl_texture_coef 1
+#hemisphere_map 1
+#normal -1
+
+OBJECT
+sphere 0 0 0 2000
+translate 0 -200 0
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+ibl_texture texture/Tropical_Beach_3k.hdr
+ibl_texture_coef 2.0
+panoramic_map 1
+normal -1
+
+
+OBJECT
+objfile ivkwwche5p1c-001/untitled.obj
+smooth 0
+back 0
+emission 0 0 0
+color 0.75 0.75 0.75
+reflection diffuse
+
+
+#OBJECT
+plane 0 -10 0
+normal 0 1 0
+color 1 1 1
+reflection diffuse
+
+#OBJECT
+plane 350 0 0
+normal -1 0 0
+color 0.1 0.1 0.1
+reflection diffuse
+
+#ÇQäKÇÃïîâÆÇ…åıåπ
+OBJECT
+sphere 0 170 0 10
+emission 300.0 300 300
+color 0.0 0.0 0.0
+reflection diffuse

@@ -64,6 +64,7 @@ CAMERA_DIR
 CAMERA_UPVEC
 0.0 1.0 0.0
 
+
 #è∆ñæ
 #OBJECT
 sphere 0 90 0 15

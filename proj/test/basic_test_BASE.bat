@@ -67,7 +67,11 @@ set IMAGE_Y=596
 set IMAGE_X=362
 call render san-miguel3.txt
 call render san-miguel4.txt
-goto end
+
+set IMAGE_Y=402
+set IMAGE_X=600
+call render san-miguel3b.txt
+:goto end
 
 
 set IMAGE_X=640
