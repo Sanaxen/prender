@@ -1,5 +1,5 @@
-set LDMPATH="C:\Users\vaio6\Desktop\レンダラ\レンダラ\パストレーシング\prender\x64\Release"
-:set LDMPATH="C:\Users\vaio6\Desktop\レンダラ\レンダラ\パストレーシング\prender\x64\FullSpectralRelease"
+set LDMPATH="..\..\prender\x64\Release"
+:set LDMPATH="..\..\prender\x64\FullSpectralRelease"
 
 set LDM=prender.exe
 
