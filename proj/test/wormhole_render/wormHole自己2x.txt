@@ -201,7 +201,7 @@ Rho 1.5
 a 0.9
 W 0.05
 dist 10
-geodesics_max_length 3000
+geodesics_max_length 30000
 background_texture1 texture/InterstellarWormhole_Fig6b.bmp
 #background_texture2 texture/InterstellarWormhole_Fig10.bmp
 map_coef1 -1 0 1 0

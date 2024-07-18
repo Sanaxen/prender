@@ -231,6 +231,7 @@ public:
 	double wormhole_a;
 	double wormhole_W;
 	double wormhole_dist;
+	double wormhole_sign;
 	bool wormHole_exist;
 	bool wormHolePos_set;
 
@@ -265,6 +266,7 @@ public:
 		wormhole_Rho = 1.3;
 		wormhole_a = 0.5;
 		wormhole_W = 0.05;
+		wormhole_sign = 0.0;
 
 		blackHole = 0;
 		wormhole_ = 0;
@@ -722,6 +724,11 @@ public:
 						{
 							sscanf1fs(buf, "W %lf %lf %lf", &wormhole_W);
 						}
+						if (strncmp(buf, "sign ", 5) == 0)
+						{
+							sscanf1fs(buf, "sign %lf", &wormhole_sign);
+						}
+
 
 						if (strncmp(buf, "dist ", 5) == 0)
 						{
@@ -2008,6 +2015,7 @@ public:
 				wormhole_Rho, wormhole_a, wormhole_W,
 				camera_position, camera_dir);
 
+			wormhole_->usr_set_sign_ = (int)wormhole_sign;
 			wormhole_->camera_up = camera_up;
 			wormhole_->screen_x = normalize(cross(camera_dir, camera_up));
 			wormhole_->screen_y = normalize(cross(wormhole_->screen_x, camera_dir));

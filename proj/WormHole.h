@@ -157,6 +157,7 @@ public:
 	Vector3d position1;
 
 	int sign;
+	int usr_set_sign_ = 0;
 
 	std::string background_texture[2];
 	double background_texture_map_coef[2][4];
@@ -202,8 +203,32 @@ public:
 				stat = 0;
 				break;
 			}
+			if (!isfinite(x))
+			{
+				break;
+			}
 		}
 		double l = x*PS_PI*M*0.5 + a;
+
+		if (stat != 0)
+		{
+			x = a;
+			for (int i = 0; i < 30; i++)
+			{
+				double xi = x;
+				x = x - (Rho + M * (x * atan(x) - 0.5 * log(1.0 + x * x)) - r) / (M * atan(x));
+
+				if (fabs(x - xi) < 1.0e-6)
+				{
+					stat = 0;
+					break;
+				}
+				if (!isfinite(x))
+				{
+					break;
+				}
+			}
+		}
 		if (stat != 0)
 		{
 			//fprintf(stderr, "error l=%f\n", (linit < 0)? -fabs(l): fabs(l));
@@ -285,6 +310,23 @@ public:
 		theta0 = poss0.th;
 		phi0 = poss0.ph;
 
+		//if (fabs(l0) < a)
+		//{
+		//	sign = -1;
+		//	l0 = sign * (a);
+		//}
+
+		//if (!isfinite(l0))
+		//{
+		//	sign = -1;
+		//	l0 = sign * (a);
+		//}
+
+		//if (usr_set_sign_)
+		//{
+		//	sign = usr_set_sign_;
+		//	l0 = sign * fabs(l0);
+		//}
 	}
 
 	int Setup( double x0, double y0, double z0, Spherical& ray, double sgn)
@@ -301,14 +343,14 @@ public:
 			pos.x -= position1.x;
 			pos.y -= position1.y;
 			pos.z -= position1.z;
-		}			
+		}
 		Spherical poss = pos.ToSpherical();
 
 		Mat.LoadIdentity();
 		invMat.LoadIdentity();
 #if 10
 		Vector3d X = normalize(camera_pos - position0);
-		if ( sign < 0 )
+		if ( sgn < 0 )
 		{
 			X = normalize(camera_pos - position1);
 		}

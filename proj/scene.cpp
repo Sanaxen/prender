@@ -718,7 +718,7 @@ namespace prender {
 		return false;
 	}
 
-
+	//static int debug_aaaa = 0;
 	// シーンとの交差判定関数
 	bool intersect_scene__(const Ray &ray, Intersection *intersection, const int depth,  int target_id)
 	{
@@ -732,6 +732,32 @@ namespace prender {
 			sign = -1.0;
 		}
 		kb.sign = sign;
+		//if (debug_aaaa == 0)
+		//{
+		//	fprintf(stderr, "sign:%d  l0:%f\n", (int)sign, kb.l0);
+		//	debug_aaaa = 1;
+		//}
+
+		//if (fabs(kb.l0) < kb.a )
+		//{
+		//	sign = -1;
+		//	kb.sign = sign;
+		//	kb.l0 = sign * (kb.a);
+		//}
+
+		//if (!isfinite(kb.l0))
+		//{
+		//	sign = -1;
+		//	kb.sign = sign;
+		//	kb.l0 = sign * (kb.a);
+		//}
+
+		if (kb.usr_set_sign_)
+		{
+			sign = kb.usr_set_sign_;
+			kb.sign = sign;
+			//kb.l0 = sign * fabs(kb.l0);
+		}
 
 		//ブラックホールの中心を(0,0,0)にする座標系に変更
 		if (!kb.Setup(ray.org.x, ray.org.y, ray.org.z, rayS, sign))
@@ -740,6 +766,26 @@ namespace prender {
 			return false;
 		}
 
+		//if (fabs(kb.l0) < kb.a )
+		//{
+		//	sign = -1;
+		//	kb.sign = sign;
+		//	kb.l0 = sign * (kb.a);
+		//}
+
+		//if (!isfinite(kb.l0))
+		//{
+		//	sign = -1;
+		//	kb.sign = sign;
+		//	kb.l0 = sign * (kb.a);
+		//}
+
+		//if (kb.usr_set_sign_)
+		//{
+		//	sign = kb.usr_set_sign_;
+		//	kb.sign = sign;
+		//	kb.l0 = sign * fabs(kb.l0);
+		//}
 
 		double y[WORMHOLE_ODE_N];
 		double dydx[WORMHOLE_ODE_N];
@@ -751,7 +797,6 @@ namespace prender {
 		Vector3d tnv = dir;
 
 		kb.initial(y, dydx, rayS, tnv);
-
 
 		int cnt = 0;
 		int cntMax = kb.geodesics_max_length;
@@ -771,7 +816,7 @@ namespace prender {
 		double h_step = h_dist;
 		while ((cntMax < 0) ? 1 : (cnt < cntMax))
 		{
-			if (fabs(y[0]) > 1.0e10 || fabs(kb.r_wh(y[0])) > 1.0e10)
+			if (fabs(y[0]) > 1.0e10 || fabs(kb.r_wh(y[0])) > 1.0e10 || !isfinite(y[0]))
 			{
 				//fprintf(stderr, " l=%f cnt %d\n",  y[0], cnt);
 				break;
