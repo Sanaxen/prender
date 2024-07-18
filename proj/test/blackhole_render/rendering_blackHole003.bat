@@ -1,0 +1,1 @@
+wscript rendering_blackHole003.vbs
