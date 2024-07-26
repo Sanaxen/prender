@@ -726,66 +726,23 @@ namespace prender {
 
 		Spherical rayS = Cartesian(ray.dir.x, ray.dir.y, ray.dir.z).ToSpherical();
 
+#if 10
 		double sign = 1.0;
 		if ( ray.org.length() > 1000000)
 		{
 			sign = -1.0;
 		}
 		kb.sign = sign;
-		//if (debug_aaaa == 0)
-		//{
-		//	fprintf(stderr, "sign:%d  l0:%f\n", (int)sign, kb.l0);
-		//	debug_aaaa = 1;
-		//}
-
-		//if (fabs(kb.l0) < kb.a )
-		//{
-		//	sign = -1;
-		//	kb.sign = sign;
-		//	kb.l0 = sign * (kb.a);
-		//}
-
-		//if (!isfinite(kb.l0))
-		//{
-		//	sign = -1;
-		//	kb.sign = sign;
-		//	kb.l0 = sign * (kb.a);
-		//}
-
-		if (kb.usr_set_sign_)
-		{
-			sign = kb.usr_set_sign_;
-			kb.sign = sign;
-			//kb.l0 = sign * fabs(kb.l0);
-		}
-
-		//ブラックホールの中心を(0,0,0)にする座標系に変更
+#else
+		double sign = kb.sign;
+#endif
+		//ワームホールの中心を(0,0,0)にする座標系に変更
 		if (!kb.Setup(ray.org.x, ray.org.y, ray.org.z, rayS, sign))
 		{
 			fprintf(stderr, "座標系エラー\n");
 			return false;
 		}
 
-		//if (fabs(kb.l0) < kb.a )
-		//{
-		//	sign = -1;
-		//	kb.sign = sign;
-		//	kb.l0 = sign * (kb.a);
-		//}
-
-		//if (!isfinite(kb.l0))
-		//{
-		//	sign = -1;
-		//	kb.sign = sign;
-		//	kb.l0 = sign * (kb.a);
-		//}
-
-		//if (kb.usr_set_sign_)
-		//{
-		//	sign = kb.usr_set_sign_;
-		//	kb.sign = sign;
-		//	kb.l0 = sign * fabs(kb.l0);
-		//}
 
 		double y[WORMHOLE_ODE_N];
 		double dydx[WORMHOLE_ODE_N];
@@ -812,7 +769,13 @@ namespace prender {
 		Vector3d org1 = ray.org;
 
 
+		//if (debug_aaa == 0)fprintf(stderr, "start l=%f r:%f\n", y[0], kb.r_wh(y[0]));
 		double h_dist = 0.5;
+		if (fabs(y[0]) < kb.a || kb.r_wh(y[0]) <= kb.Rho)
+		{
+			h_dist = h_dist * 0.15;
+		}
+
 		double h_step = h_dist;
 		while ((cntMax < 0) ? 1 : (cnt < cntMax))
 		{
@@ -842,6 +805,7 @@ namespace prender {
 			 }*/
 
 			kb.geodesic( y, dydx);
+			//if (debug_aaa == 0)fprintf(stderr, " %d l=%f r:%f\n", cnt, y[0], kb.r_wh(y[0]));
 
 			if (fabs(h_step) < 1.0e-14)
 			{
@@ -869,9 +833,17 @@ namespace prender {
 			cnt++;
 
 		}
+
+		//初期位置がチューブの外にある場合で「こっち側」か「あっち側」の指定があればその指定に合わせる
+		if (kb.usr_set_sign_ )
+		{
+			y[0] = kb.usr_set_sign_*y[0];
+		}
+
 		//fprintf(stderr, "%d\n", cnt);
 		// PointsDump();
-
+		//if (debug_aaa == 0)fprintf(stderr, "end l=%f r:%f\n", y[0], kb.r_wh(y[0]));
+		//debug_aaa = 1;
 
 		//fprintf(stderr, "Tracking of geodesic Limit!![%d]\n", cnt);
 		//Spherical sp(y[0], y[1], y[2]);

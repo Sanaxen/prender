@@ -67,7 +67,7 @@ for k = 1 to n
 	objUsrEnv.Item("UU") = Cstr(0)
 	objUsrEnv.Item("AA") = Cstr(10000000+x)
 
-	c = objWshShell.run ("_test002.bat",6,1)
+	c = objWshShell.run ("_test002a.bat",6,1)
 	c = objWshShell.Run("copyImage.bat wormHole002a*.bmp " & Cstr(i),6,1)
 	c = objWshShell.Run("cmd.exe /c del wormHole002a*.bmp",6,1)
 	c = objWshShell.Run("cmd.exe /c del wormHole002a*.hdr",6,1)
@@ -99,7 +99,8 @@ for k = 1 to n
 	objUsrEnv.Item("XX") = Cstr(x)
 	objUsrEnv.Item("TT") = Cstr(180+k*step)
 	objUsrEnv.Item("UU") = Cstr(0)
-	objUsrEnv.Item("AA") = Cstr(x)
+	'objUsrEnv.Item("AA") = Cstr(x)
+	objUsrEnv.Item("AA") = Cstr(10000000+x)
 
 	c = objWshShell.run ("_test002a.bat",6,1)
 	c = objWshShell.Run("copyImage.bat wormHole002a*.bmp " & Cstr(i),6,1)
@@ -107,6 +108,22 @@ for k = 1 to n
 	c = objWshShell.Run("cmd.exe /c del wormHole002a*.hdr",6,1)
 	
 	x = x - 1
+	i = i + 1
+Next
+
+for k = 1 to n
+	objUsrEnv.Item("XX") = Cstr(x)
+	objUsrEnv.Item("TT") = Cstr(0)
+	objUsrEnv.Item("UU") = Cstr(0)
+	'objUsrEnv.Item("AA") = Cstr(x)
+	objUsrEnv.Item("AA") = Cstr(10000000+x)
+
+	c = objWshShell.run ("_test002a.bat",6,1)
+	c = objWshShell.Run("copyImage.bat wormHole002a*.bmp " & Cstr(i),6,1)
+	c = objWshShell.Run("cmd.exe /c del wormHole002a*.bmp",6,1)
+	c = objWshShell.Run("cmd.exe /c del wormHole002a*.hdr",6,1)
+	
+	x = x + 1
 	i = i + 1
 Next
 

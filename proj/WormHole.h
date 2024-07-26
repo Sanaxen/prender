@@ -221,6 +221,7 @@ public:
 				if (fabs(x - xi) < 1.0e-6)
 				{
 					stat = 0;
+					l = x * PS_PI * M * 0.5 + a;
 					break;
 				}
 				if (!isfinite(x))
@@ -301,32 +302,24 @@ public:
 			sign = -1.0;
 		}
 
-		pos0.x -= position0.x;
-		pos0.y -= position0.y;
-		pos0.z -= position0.z;
+		if (sign > 0)
+		{
+			pos0.x -= position0.x;
+			pos0.y -= position0.y;
+			pos0.z -= position0.z;
+		}
+		else
+		{
+			pos0.x -= position1.x;
+			pos0.y -= position1.y;
+			pos0.z -= position1.z;
+		}
 		Spherical poss0 = pos0.ToSpherical();
 
 		l0 = rtol(poss0.r, sign*a/2);
 		theta0 = poss0.th;
 		phi0 = poss0.ph;
 
-		//if (fabs(l0) < a)
-		//{
-		//	sign = -1;
-		//	l0 = sign * (a);
-		//}
-
-		//if (!isfinite(l0))
-		//{
-		//	sign = -1;
-		//	l0 = sign * (a);
-		//}
-
-		//if (usr_set_sign_)
-		//{
-		//	sign = usr_set_sign_;
-		//	l0 = sign * fabs(l0);
-		//}
 	}
 
 	int Setup( double x0, double y0, double z0, Spherical& ray, double sgn)
@@ -343,7 +336,7 @@ public:
 			pos.x -= position1.x;
 			pos.y -= position1.y;
 			pos.z -= position1.z;
-		}
+		}			
 		Spherical poss = pos.ToSpherical();
 
 		Mat.LoadIdentity();

@@ -69,7 +69,7 @@ VAR AA
 %AA%
 
 CAMERA_POS
-X+XX Y 55.0
+X+XX+AA Y 55.0
 
 CAMERA_DIR
 cos(TT*pi/180) sin(TT*pi/180) sin(UU*pi/180)
@@ -88,12 +88,12 @@ CAMERA_UPVEC
 
 WORMHOLE
 in X Y Z
-out X+1000000 Y Z
+out X+1000000+6 Y Z
 Rho 1.3
 a 0.5
 W 0.05
-sign AA
-geodesics_max_length 6000
+#sign AA
+geodesics_max_length 800
 background_texture1 texture/bgedit2.bmp
 background_texture2 texture/InterstellarWormhole_Fig10.bmp
 map_coef1 -1 0 1 0
