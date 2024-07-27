@@ -52,7 +52,7 @@ Double Negative Gravitational Renderer
 
 ## **Wormhole**
 <img src="./images/eq4.png"  width="50%%">
-<img src="./images/eq3.png"  width="40%%">  
+<img src="./images/eq3.png"  width="30%%">  
 
 [Visualizing Interstellar's Wormhole](https://arxiv.org/abs/1502.03809)  
 A7a -- A7e
