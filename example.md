@@ -26,8 +26,9 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 
 ## **Black hole**
 <img src="./images/eq1.png"  width="50%%">
-<img src="./images/eq2.png"  width="50%%">
-<img src="./images/prender_g.png"  width="50%%"><img src="./images/dng.png"  width="50%%">
+<img src="./images/eq2.png"  width="40%%">  
+
+<img src="./images/prender_g.png"  width="40%%"><img src="./images/dng.png"  width="40%%">  
 right image 
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
 Double Negative Gravitational Renderer
@@ -51,7 +52,7 @@ Double Negative Gravitational Renderer
 
 ## **Wormhole**
 <img src="./images/eq4.png"  width="50%%">
-<img src="./images/eq3.png"  width="50%%">  
+<img src="./images/eq3.png"  width="40%%">  
 
 [Visualizing Interstellar's Wormhole](https://arxiv.org/abs/1502.03809)  
 A7a -- A7e
