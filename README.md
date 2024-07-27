@@ -27,4 +27,3 @@ As for wormholes, I was very inspired by the following
 
 
 [Wormhole Simulation](https://www.youtube.com/embed/SZDOKtT_QZE)
-</div>
