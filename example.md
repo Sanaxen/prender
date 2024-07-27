@@ -23,14 +23,21 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 
 # **Gravitational Renderer**  
 
-## **Black hole**
 
+## **Black hole**
+<img src="./images/eq1.png"  width="50%%">
+<img src="./images/eq2.png"  width="50%%">
 <img src="./images/prender_g.png"  width="50%%"><img src="./images/dng.png"  width="50%%">
 right image 
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
 Double Negative Gravitational Renderer
 
 <img src="./images/prender_g2.png"  width="50%%"><img src="./images/dng2.png"  width="50%%">
+right image 
+© 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
+Double Negative Gravitational Renderer
+
+<img src="./images/prender_g3.png"  width="50%%"><img src="./images/dng3.png"  width="50%%">
 right image 
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
 Double Negative Gravitational Renderer
@@ -43,9 +50,23 @@ Double Negative Gravitational Renderer
 
 
 ## **Wormhole**
+<img src="./images/eq4.png"  width="50%%">
+<img src="./images/eq3.png"  width="50%%">  
 
+[Visualizing Interstellar's Wormhole](https://arxiv.org/abs/1502.03809)  
+A7a -- A7e
 
+<img src="./images/wormHole.png"  width="50%%">
+<img src="./images/wormHole2.png"  width="50%%">  
+
+Notes.  
+This is an example of two different scenes connected by a wormhole.
+
+---
 <img src="./images/aaa.gif"  width="50%%"><img src="./images/aaa0.gif"  width="50%%">
+Notes.  
+There is a scene in the movie in which the main character Cooper looks at the wormhole and says, “It is different from the picture I saw,” and Dr. Romilly explains that it is a spherical hole because it is a three-dimensional hole. Many people find it difficult to understand the meaning of this spherical hole, but now that the wormhole has been rendered, it is easier to understand if you change your viewpoint and go around the wormhole as shown in the figure.
+It is indeed a spherical hole.  
 
 ---
 # Black holes and wormholes in the Cornell Box  
