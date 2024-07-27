@@ -26,6 +26,5 @@ As for wormholes, I was very inspired by the following
 [Movie: Flight through a wormhole](https://www.youtube.com/watch?v=SZDOKtT_QZE)
 
 
-<div>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/SZDOKtT_QZE"></iframe>
+[Wormhole Simulation](https://www.youtube.com/embed/SZDOKtT_QZE)
 </div>
