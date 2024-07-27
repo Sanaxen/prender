@@ -31,3 +31,7 @@ As for wormholes, I was very inspired by the following
 
 ---
 # **[prender examples](https://github.com/Sanaxen/prender/blob/main/example.md)**
+
+## Notes.
+prender was developed around 2014.
+At that time, we were working on various projects and trials, so there may be some incomplete parts or code based on incorrect ideas.
