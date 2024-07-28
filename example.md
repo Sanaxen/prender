@@ -15,9 +15,29 @@ right image
 https://www.pbrt.org/scenes-v2  
 sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolución Visual, based on a hacienda that he visited in San Miguel de Allende, Mexico. The scene was modeled in 3ds max and exported to the pbrt file format with a custom script written by Guillermo. The scene features just over 2.5 million unique triangles and has a total geometric complexity of 10.7 million triangles due to the use of object instancing; the pbrt files that describe the scene geometry require 620 MB of on-disk storage. There are a total of 354 texture maps, representing 293 MB of texture data.
 
-<img src="./images/sponza_平行光源実験3_本当の平行光源2_2000x2_nes_36730.1(8000spp).png"  width="50%%">
-<img src="./images/博物館test_200x2_nes_13625.4(800spp).png"  width="50%%">
 <img src="./images/部屋2_400x2_nes_2627.7(1600spp).png"  width="50%%">
+
+---
+## participating media
+<img src="./images/sponza_平行光源実験3_本当の平行光源2_2000x2_nes_36730.1(8000spp).png"  width="50%%">
+<img src="./images/博物館test_200x2_nes_13625.4(800spp).png"  width="50%%">  
+
+
+### Isotropic scattering  
+<img src="./images/CornellBox_participatingMedia_等方散乱_600x4.png"  width="50%%">  
+
+### Forward scattering  
+<img src="./images/CornellBox_participatingMedia_前方散乱_600x4.png"  width="50%%">  
+
+### Backscatter  
+<img src="./images/CornellBox_participatingMedia_後方散乱_600x4.png"  width="50%%">
+
+## Subsurface Scattering  
+### BSSRDF
+<img src="./images/CornellBox_SSSKetchup_bunny_demo_1000x2_nes_1464.3(4000spp)_bssrdf2.png"  width="50%%"><img src="./images/CornellBox_SSSPotato_bunny_demo_1000x2_nes_1456.2(4000spp)_bssrdf2.png"  width="50%%">  
+
+### Scattering simulation
+<img src="./images/CornellBox_SSSKetchup_bunny_demo_1000x2_nes_3088.1(4000spp)_AAA.png"  width="50%%"><img src="./images/CornellBox_SSSPotato_bunny_demo_1000x2_nes_2450.4(4000spp)_AAA.png"  width="50%%">
 
 ---
 
@@ -25,10 +45,12 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 
 
 ## **Black hole**
-<img src="./images/eq1.png"  width="50%%">
+<img src="./images/eq1.png"  width="80%%">
 <img src="./images/eq2.png"  width="40%%">  
 
 <img src="./images/prender_g.png"  width="40%%"><img src="./images/dng.png"  width="40%%">  
+
+
 right image 
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
 Double Negative Gravitational Renderer
@@ -43,15 +65,17 @@ right image
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
 Double Negative Gravitational Renderer
 
-
+## Inspired by the movie Interstellar.  
 <img src="./images/CornellBox_blackHole001_3x1_20480.5(3spp).png"  width="50%%">
+<img src="./images/CornellBox_blackHole001_4x1_14540.8(4spp).png"  width="60%%">
 
+## Differences in appearance of Kerr black holes due to differences in angular momentum  
 <img src="./images/CornellBox_blackHole01_1x3_2849.0(9spp).png"  width="50%%"><img src="./images/CornellBox_blackHole02_1x3_2773.2(9spp).png"  width="50%%">
 
 
 
 ## **Wormhole**
-<img src="./images/eq4.png"  width="50%%">
+<img src="./images/eq4.png"  width="80%%">
 <img src="./images/eq3.png"  width="30%%">  
 
 [Visualizing Interstellar's Wormhole](https://arxiv.org/abs/1502.03809)  

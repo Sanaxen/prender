@@ -35,3 +35,10 @@ As for wormholes, I was very inspired by the following
 ## Notes.
 prender was developed around 2014.
 At that time, we were working on various projects and trials, so there may be some incomplete parts or code based on incorrect ideas.
+
+## There are some things we really need to be careful about.  
+It has absolutely no practical value in the following respects.
+1. execution speed is very slow.
+There are experimental implementations of MPI and other mechanisms, but they are basically just parallelization with multi-threading. A state-of-the-art implementation would probably use GPUs, but that has not been done at all.
+2. There is a lot of experimental thinking in the implementation.
+Some parts of the theory are not implemented as they are, and some implementations are based on understanding supplemented by imagination.
