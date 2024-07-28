@@ -59,11 +59,15 @@ Double Negative Gravitational Renderer
 right image 
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
 Double Negative Gravitational Renderer
+The image on the left shows the Glow effect added to the prender output.
+https://hp.vector.co.jp/authors/VA014310/pika_13s.lzh
 
 <img src="./images/prender_g3.png"  width="50%%"><img src="./images/dng3.png"  width="50%%">
 right image 
 © 2014 Warner Bros. Entertainment, Inc. and Paramount Pictures. All Rights Reserved  
-Double Negative Gravitational Renderer
+Double Negative Gravitational Renderer 
+The image on the left shows the Glow effect added to the prender output.
+https://hp.vector.co.jp/authors/VA014310/pika_13s.lzh
 
 ## Inspired by the movie Interstellar.  
 <img src="./images/CornellBox_blackHole001_3x1_20480.5(3spp).png"  width="50%%">
