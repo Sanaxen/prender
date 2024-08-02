@@ -44,14 +44,16 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 
 ---
 ## Full Spectrum
-<img src="./images/fullスペクトルTest_2000x2.png"  width="50%%">  
-<img src="./images/CornellBox_spectrum_4000x2_nes_125686.1(16000spp)_spectrum.png"  width="50%%"><img src="./images/FullSpectral_CornellBox_polygonTest5_200x20_Caustics.png"  width="50%%">  
-
-
-<img src="./images/output_W000910.png"  width="50%%"><img src="./images/output_W000910_processed.jpg"  width="50%%"> 
+<img src="./images/fullスペクトルTest_2000x2.png"  width="40%%"><img src="./images/fullスペクトルTest_2000x2_processed.jpg"  width="40%%">  
 Right image is denoised  
 
-<img src="./images/output_W002489.png"  width="50%%"><img src="./images/output_W002489_processed.jpg"  width="50%%"> 
+<img src="./images/CornellBox_spectrum_4000x2_nes_125686.1(16000spp)_spectrum.png"  width="40%%"><img src="./images/FullSpectral_CornellBox_polygonTest5_200x20_Caustics.png"  width="40%%">  
+
+
+<img src="./images/output_W000910.png"  width="40%%"><img src="./images/output_W000910_processed.jpg"  width="40%%">  
+Right image is denoised  
+
+<img src="./images/output_W002489.png"  width="40%%"><img src="./images/output_W002489_processed.jpg"  width="40%%"> 
 Right image is denoised  
 ---
 
