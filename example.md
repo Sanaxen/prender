@@ -33,12 +33,19 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 <img src="./images/CornellBox_participatingMedia_後方散乱_600x4.png"  width="50%%">
 
 ## Subsurface Scattering  
+<img src="./images/CornellBox_SSSマーブルbunny_demo_33x2_nes_197.6(132spp).png"  width="60%%">  
+
+
 ### BSSRDF
 <img src="./images/CornellBox_SSSKetchup_bunny_demo_1000x2_nes_1464.3(4000spp)_bssrdf2.png"  width="50%%"><img src="./images/CornellBox_SSSPotato_bunny_demo_1000x2_nes_1456.2(4000spp)_bssrdf2.png"  width="50%%">  
 
 ### Scattering simulation
 <img src="./images/CornellBox_SSSKetchup_bunny_demo_1000x2_nes_3088.1(4000spp)_AAA.png"  width="50%%"><img src="./images/CornellBox_SSSPotato_bunny_demo_1000x2_nes_2450.4(4000spp)_AAA.png"  width="50%%">
 
+---
+## Full Spectrum
+<img src="./images/fullスペクトルTest_2000x2.png"  width="50%%">  
+<img src="./images/CornellBox_spectrum_4000x2_nes_125686.1(16000spp)_spectrum.png"  width="50%%"><img src="./images/FullSpectral_CornellBox_polygonTest5_200x20_Caustics.png"  width="50%%">  
 ---
 
 # **Gravitational Renderer**  
