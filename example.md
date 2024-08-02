@@ -98,6 +98,7 @@ https://hp.vector.co.jp/authors/VA014310/pika_13s.lzh
 
 ## **Wormhole**
 <img src="./images/eq4.png"  width="80%%">
+<img src="./images/eq3_1.png"  width="30%%">  
 <img src="./images/eq3.png"  width="30%%">  
 
 [Visualizing Interstellar's Wormhole](https://arxiv.org/abs/1502.03809)  
