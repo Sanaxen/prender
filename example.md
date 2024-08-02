@@ -63,6 +63,7 @@ Right image is denoised
 
 ## **Black hole**
 <img src="./images/eq1.png"  width="80%%">
+<img src="./images/eq1_2.png"  width="40%%">
 <img src="./images/eq2.png"  width="40%%">  
 
 <img src="./images/prender_g.png"  width="40%%"><img src="./images/dng.png"  width="40%%">  
