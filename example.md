@@ -53,7 +53,7 @@ Right image is denoised
 <img src="./images/output_W000910.png"  width="40%%"><img src="./images/output_W000910_processed.jpg"  width="40%%">  
 Right image is denoised  
 
-<img src="./images/output_W002489.png"  width="40%%"><img src="./images/output_W002489_processed.jpg"  width="40%%">  
+<img src="./images/image3.png"  width="40%%"><img src="./images/image3_processed.jpg"  width="40%%">  
 Right image is denoised 
 
 ---
