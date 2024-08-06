@@ -11,8 +11,7 @@ left image **prender**
 
 
 <img src="./images/san-miguel3b_400x2_nes_32568.9(1600spp).png"  width="50%%"><img src="https://www.pbrt.org/scenes_images/sanmiguel.jpg"  width="50%%">
-right image  
-https://www.pbrt.org/scenes-v2  
+[right image](https://www.pbrt.org/scenes-v2)  
 sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolución Visual, based on a hacienda that he visited in San Miguel de Allende, Mexico. The scene was modeled in 3ds max and exported to the pbrt file format with a custom script written by Guillermo. The scene features just over 2.5 million unique triangles and has a total geometric complexity of 10.7 million triangles due to the use of object instancing; the pbrt files that describe the scene geometry require 620 MB of on-disk storage. There are a total of 354 texture maps, representing 293 MB of texture data.
 
 <img src="./images/部屋2_400x2_nes_2627.7(1600spp).png"  width="50%%">
@@ -33,7 +32,7 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 <img src="./images/CornellBox_participatingMedia_後方散乱_600x4.png"  width="50%%">
 
 ## Subsurface Scattering  
-<img src="./images/CornellBox_SSSマーブルbunny_demo_33x2_nes_197.6(132spp).png"  width="60%%">  
+<img src="./images/CornellBox_SSSマーブルbunny_demo_33x2_nes_197.6(132spp)_.jpg"  width="60%%">  
 
 
 ### BSSRDF
@@ -43,7 +42,11 @@ sanmiguel.pbrt: this scene was modeled by Guillermo M. Leal Llaguno of Evolució
 <img src="./images/CornellBox_SSSKetchup_bunny_demo_1000x2_nes_3088.1(4000spp)_AAA.png"  width="50%%"><img src="./images/CornellBox_SSSPotato_bunny_demo_1000x2_nes_2450.4(4000spp)_AAA.png"  width="50%%">
 
 ---
-## Full Spectrum
+## Full Spectrum  
+
+Since the wavelengths are sampled uniformly, there is no convergence even if a significant number of wavelengths are sampled, so noise remains in the image.  
+
+---
 <img src="./images/fullスペクトルTest_2000x2.png"  width="40%%"><img src="./images/fullスペクトルTest_2000x2_processed.jpg"  width="40%%">  
 Right image is denoised  
 
@@ -54,7 +57,12 @@ Right image is denoised
 Right image is denoised  
 
 <img src="./images/image3.png"  width="40%%"><img src="./images/image3_processed.jpg"  width="40%%">  
-Right image is denoised 
+Right image is denoised  
+
+It is clear that it is not practical to deal with light collection and spectroscopy in path tracing.  
+<img src="./images/spectrography.png"  width="40%%">
+
+<img src="./images/prism.gif"  width="40%%">
 
 ---
 
