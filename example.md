@@ -62,7 +62,7 @@ Right image is denoised
 It is clear that it is not practical to deal with light collection and spectroscopy in path tracing.  
 <img src="./images/spectrography.png"  width="40%%">
 
-<img src="./images/prism.gif"  width="40%%">
+<img src="./images/prism.gif"  width="30%%">
 
 ---
 
