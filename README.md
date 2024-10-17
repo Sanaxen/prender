@@ -19,8 +19,12 @@ The following papers are used as references for implementation.
 
 [Visualizing Interstellar's Wormhole](https://arxiv.org/abs/1502.03809)
 
-**Gravitational Renderer**  
-``The VFX used in Interstellar was a renderer (Double Negative Gravitational Renderer) developed by 30 members of Double Negative's VFX team under Kip's guidance. The technology developed for this film and the new findings that resulted in two papers also attracted a lot of attention.Gravitational Lensing by Spinning Black Holes in Astrophysics, and in the Movie Interstellar and Visualizing_Interstellar's_Wormhole.It describes how a spinning black hole or wormhole looks when approached (and what kind of image the camera records).Director Christopher Nolan discussed with Kip how to represent the vicinity of a black hole in VFX, i.e., how to depict space-time in a strong gravitational field, and eventually decided to develop the above renderer to be faithful to physics.``
+**Gravitational Renderer**  `The VFX used in Interstellar was a renderer (Double Negative Gravitational Renderer) developed by 30 members of Double Negative's VFX team under Kip's guidance.
+ The technology developed for this film and the new findings that resulted in two papers also attracted a lot of attention.
+ Gravitational Lensing by Spinning Black Holes in Astrophysics, and in the Movie Interstellar and Visualizing_Interstellar's_Wormhole.
+ It describes how a spinning black hole or wormhole looks when approached (and what kind of image the camera records).
+ Director Christopher Nolan discussed with Kip how to represent the vicinity of a black hole in VFX,
+  i.e., how to depict space-time in a strong gravitational field, and eventually decided to develop the above renderer to be faithful to physics.
 
 As for wormholes, I was very inspired by the following  
 [Space Time Travel](https://www.spacetimetravel.org/wurmlochflug)
