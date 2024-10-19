@@ -1,6 +1,6 @@
 *.1 linguist-language=cpp
 *.2 linguist-language=cpp
-*.3 linguist-language=cpp
+*.c linguist-language=cpp
 
 *.txt text eol=crlf
 *.bat text eol=crlf
