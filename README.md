@@ -1,5 +1,5 @@
 # prender
-center><img src=./images/image00.png width=80%></center>
+<center><img src=./images/image00.png width=80%></center>
 
 prender is an impractical renderer that I created while experimenting with various ways to learn how to implement path tracing.
 
