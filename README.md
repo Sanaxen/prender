@@ -6,7 +6,7 @@ prender is an impractical renderer that I created while experimenting with vario
 Very much learned from the following sites
 [https://kagamin.net/hole/edupt/](https://kagamin.net/hole/edupt/)
 This site can handle diffuse reflections, specular surfaces, and ideal glass.
-[https://github.com/githole/edupt[(https://github.com/githole/edupt)]
+[https://github.com/githole/edupt](https://github.com/githole/edupt)
 
 
 ## prender
