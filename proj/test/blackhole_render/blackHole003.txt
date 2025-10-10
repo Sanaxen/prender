@@ -28,6 +28,8 @@ DEPTH_LIMIT
 SUPERSAMPLING
 4
 
+gamma_offset
+0.3
 
 VAR X
 165
@@ -60,6 +62,7 @@ emission 0.8 0.8 0.8
 color 0.01 0.01 0.01
 reflection diffuse
 disk_map 1
+coef 2
 blackhole_disk 0
 
 BLACKHOLE X Y Z
@@ -67,4 +70,5 @@ geodesics_max_length 2000
 angular_momentum 0.5
 accretion_disk 18
 accretion_disk_texture texture/adisk0.bmp
-background_texture texture/InterstellarWormhole_Fig6b.bmp
+background_texture texture/bgedit.bmp
+#background_texture texture/InterstellarWormhole_Fig6b.bmp

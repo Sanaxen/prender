@@ -1464,12 +1464,27 @@ public:
 		bmp.Create(width, height);
 		for ( int i = 0; i < height; i++ )
 		{
+#pragma omp parallel for schedule(dynamic, 1)
 			for ( int j = 0; j < width; j++ )
 			{
 				const int id = (height - i - 1) * width + j;
 				bmp.cell(i,j) = Rgb(to_int(image[id].x), to_int(image[id].y), to_int(image[id].z));
 			}
 		}
+		
+		if (fabs(env_p->gamma_offset) > 0.01)
+		{
+			for (int i = 0; i < height; i++)
+			{
+#pragma omp parallel for schedule(dynamic, 1)
+				for (int j = 0; j < width; j++)
+				{
+					const int id = (height - i - 1) * width + j;
+					bmp.cell(i, j) = Rgb(to_int(image[id].x, env_p->gamma_offset), to_int(image[id].y, env_p->gamma_offset), to_int(image[id].z, env_p->gamma_offset));
+				}
+			}
+		}
+
 		bmp.Write(filename);
 
 		if(0)
@@ -1506,10 +1521,23 @@ public:
 		bmp.Create(width, height);
 		for ( int i = 0; i < height; i++ )
 		{
+#pragma omp parallel for schedule(dynamic, 1)
 			for ( int j = 0; j < width; j++ )
 			{
 				const int id = (height - i - 1) * width + j;
 				bmp.cell(i,j) = Rgb(to_int(image[id].x), to_int(image[id].y), to_int(image[id].z));
+			}
+		}
+		if (fabs(env_p->gamma_offset) > 0.01)
+		{
+			for (int i = 0; i < height; i++)
+			{
+#pragma omp parallel for schedule(dynamic, 1)
+				for (int j = 0; j < width; j++)
+				{
+					const int id = (height - i - 1) * width + j;
+					bmp.cell(i, j) = Rgb(to_int(image[id].x, env_p->gamma_offset), to_int(image[id].y, env_p->gamma_offset), to_int(image[id].z, env_p->gamma_offset));
+				}
 			}
 		}
 		bmp.Write(filename);

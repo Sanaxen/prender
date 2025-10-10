@@ -891,7 +891,8 @@ inline Spherical Cartesian::ToBoyerLindquist(double a)
 {
 	double r0 = x*x + y*y + z*z;
 	double u = r0 - a*a;
-	r0 = sqrt((u + sqrt(u*u + (2.*a*z)*(2.*a*z))) / 2.);
+	double zz = 2. * a * z;
+	r0 = sqrt((u + sqrt(u*u + zz*zz)) / 2.);
 	double theta = acos(Clamp(z / r0, -1.0, 1.0));
 	double phi = atan2(y / r0, x / r0);
 	phi = (phi < 0.0) ? phi + PS_TWOPI : phi;

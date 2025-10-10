@@ -22,6 +22,9 @@ inline double clamp(double x){
 inline int to_int(double x){
 	return int(pow(clamp(x), C_1_22) * 255 + 0.5);
 }
+inline int to_int(double x, double gamma) {
+	return int(pow(clamp(x), gamma) * 255 + 0.5);
+}
 
 void save_ppm_file(const std::string &filename, const Color *image, const int width, const int height) {
 	FILE *f = fopen(filename.c_str(), "wb");

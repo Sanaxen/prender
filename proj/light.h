@@ -124,7 +124,7 @@ public:
 			{
 				printf("IBL:");
 			}
-			printf("light %d power %f cdf %f pdf %f\n", i, list[i].power, accumulatedProbability[i], eachLightProbability[i]);
+			printf("light %d power %f cdf %f pdf %f\n", (int)i, list[i].power, accumulatedProbability[i], eachLightProbability[i]);
 		}
 
 	}

@@ -926,6 +926,8 @@ public:
 		for (int i = 0; i < MAX_THREADS_LC + 1; i++) minval[i] = 999999999.0;
 
 	A:;
+		const double costheta0 = cos(theta0);
+		const double sintheta0 = sin(theta0);
 #pragma omp parallel for
 		for (int i = 0; i < n; i++)
 		{
@@ -946,16 +948,20 @@ public:
 			double y00 = (-1.0 + 2.0*rnd[id].next01()) * 3;
 			double z00 = (-1.0 + 2.0*rnd[id].next01()) * 3;
 
+			double cosz00 = cos(z00);
+			double sinz00 = sin(z00);
+			double cosy00 = cos(y00);
+			double siny00 = sin(y00);
 
 			double r = y1[0];
-			double sigma = r*r + (a*cos(theta0))*(a*cos(theta0));
+			double sigma = r*r + (a* costheta0)*(a* costheta0);
 			double R = sqrt(a2 + r*r);
-			double v = -sin(z00)*cos(y00);
+			double v = -sinz00*cosy00;
 			double zdot = 1.;
 
-			double rdot0 = zdot*(r*R*v*sin(theta0) - R*R*cos(z00)*cos(theta0)) / sigma;
-			double thetadot0 = zdot*(r*sin(theta0)*cos(z00) + R*v*cos(theta0)) / sigma;
-			double phidot0 = zdot*sin(z00)*sin(y00) / (R*sin(theta0));
+			double rdot0 = zdot*(r*R*v*sintheta0 - R*R*cosz00* costheta0) / sigma;
+			double thetadot0 = zdot*(r* sintheta0 *cosz00 + R*v* costheta0) / sigma;
+			double phidot0 = zdot*sinz00*siny00 / (R* sintheta0);
 
 			dydx1[0] = rdot0;
 			dydx1[1] = thetadot0;

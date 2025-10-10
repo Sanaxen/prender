@@ -110,6 +110,7 @@ namespace prender {
 	public:
 		UVPlane* base;
 		double radius;
+		double radius_inner = 0.0;
 		int blackhole_disk;
 
 		Circle(const Vector3d& o, const Vector3d& n, const double r, int m)
@@ -177,6 +178,10 @@ namespace prender {
 				return false;
 			}
 			if (dot(hitpoint->position - org, hitpoint->position - org) > radius*radius)
+			{
+				return false;
+			}
+			if (dot(hitpoint->position - org, hitpoint->position - org) <  radius_inner * radius_inner)
 			{
 				return false;
 			}

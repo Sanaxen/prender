@@ -115,6 +115,20 @@ inline void sscanf4fs(const char* buf, const char* fmt, ...)
 	expr_eval(strchr(buf, ' ')+1, val);
 }
 
+inline void sscanf5fs(const char* buf, const char* fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+
+	std::vector<double*> val;
+	for (int i = 0; i < 5; i++)
+	{
+		val.push_back(va_arg(args, double*));
+	}
+	va_end(args);
+	expr_eval(strchr(buf, ' ') + 1, val);
+}
+
 
 #pragma warning(disable:4101)
 
@@ -163,6 +177,7 @@ public:
 	double camera_angle;		//水平方向の視角。 0°～180°の範囲で指定する。
 	Matrix4x4	camera_matrix;
 
+	double gamma_offset = 0;
 	int samples;
 	int supersamples;
 	int DepthLimit;
@@ -345,6 +360,13 @@ public:
 			char buf[1024];
 			while( getLine(buf, 1024, fp) != NULL )
 			{
+				//gamma_offset
+				if (strcmp(buf, "gamma_offset\n") == 0)
+				{
+					getLine(buf, 1024, fp);
+					gamma_offset = atof(buf);
+					continue;
+				}
 				//LUMINANCE_CUTOFF
 				if (strcmp(buf, "luminance_cutoff\n") == 0)
 				{
@@ -621,7 +643,7 @@ public:
 
 
 
-				if (strncmp(buf, "BLACKHOLE", 9) == 0)
+				if (strncmp(buf, "BLACKHOLE", 9) == 0 )
 				{
 					blackHole_exist = true;
 					if (strncmp(buf, "BLACKHOLE ", 10) == 0)
@@ -667,7 +689,7 @@ public:
 							char* p = strchr(buf, '\n');
 							if (p) *p = '\0';
 							accretion_disk_texture.push_back( buf + 23 );
-							printf("accretion_disk_texture[%d]=[%s]\n", accretion_disk_texture.size() - 1, accretion_disk_texture[accretion_disk_texture.size() - 1].c_str());
+							printf("accretion_disk_texture[%d]=[%s]\n", (int)accretion_disk_texture.size() - 1, accretion_disk_texture[accretion_disk_texture.size() - 1].c_str());
 						}
 						if (strncmp(buf, "background_texture ", 19) == 0)
 						{
@@ -781,7 +803,7 @@ public:
 					EntityType type;
 					char file[512];			//OBJファイル（メッシュ）
 
-					double x, y, z, r;		//球
+					double x, y, z, r, rr;		//球
 					int hemisphere = 0;		//半球フラグ
 					Vector3d org, normal;	//平面
 					Vector3d U, V;	//UV平面
@@ -865,7 +887,15 @@ public:
 					//円盤
 					if (strncmp(buf, "disk ", 5) == 0)
 					{
+						rr = 0.0;
 						sscanf4fs(buf, "disk %lf %lf %lf %lf", &x, &y, &z, &r);
+						getLine(buf, 1024, fp);
+						sscanf3fs(buf, "normal %lf %lf %lf", &normal.x, &normal.y, &normal.z);
+						type = ENTITY_TYPE_CIRCLE;
+					}
+					if (strncmp(buf, "disk2 ", 6) == 0)
+					{
+						sscanf5fs(buf, "disk2 %lf %lf %lf %lf %lf", &x, &y, &z, &r, &rr);
 						getLine(buf, 1024, fp);
 						sscanf3fs(buf, "normal %lf %lf %lf", &normal.x, &normal.y, &normal.z);
 						type = ENTITY_TYPE_CIRCLE;
@@ -1529,6 +1559,7 @@ public:
 						material_id = material_list.Add(material);
 
 						Circle* disk = new Circle(Vector3d(x, y, z), normal, r, material_id);
+						disk->radius_inner = rr;
 						disk->materialList = &material_list;
 						disk->blackhole_disk = blackhole_disk;
 
@@ -1833,7 +1864,7 @@ public:
 		printf("CAMERA_DIR %f %f %f\n", camera_dir.x, camera_dir.y, camera_dir.z);
 
 		printf("  CAMERA_UPVEC %f %f %f\n", camera_up.x, camera_up.y, camera_up.z);
-
+		printf("gamma_offset:%f\n", gamma_offset);
 		//const Vector3d screen_x = normalize(cross(camera_dir, camera_up));
 		//camera_up = normalize(cross(screen_x, camera_dir));
 
