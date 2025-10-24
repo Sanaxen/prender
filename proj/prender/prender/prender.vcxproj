@@ -267,6 +267,7 @@
     <ClInclude Include="..\..\radiance.h" />
     <ClInclude Include="..\..\random.h" />
     <ClInclude Include="..\..\ray.h" />
+    <ClInclude Include="..\..\relativistic.h" />
     <ClInclude Include="..\..\render.h" />
     <ClInclude Include="..\..\sampler.h" />
     <ClInclude Include="..\..\scene.h" />
