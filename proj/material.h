@@ -91,6 +91,7 @@ public:
 		angular_map = 0;
 		panoramic_map = 0;
 		disk_map = 0;
+		equirectangular_map = 0;
 
 		roughness = 0.0;
 
@@ -188,6 +189,7 @@ public:
 	char angular_map;
 	char panoramic_map;
 	char disk_map;
+	char equirectangular_map;
 
 	//物体をライトとする条件判定
 	inline bool isLight() const

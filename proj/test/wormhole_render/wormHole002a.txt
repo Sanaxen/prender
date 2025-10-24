@@ -94,7 +94,7 @@ a 0.5
 W 0.05
 geodesics_max_length 3000
 background_texture1 texture/uffizi-large.bmp
-background_texture2 texture/Tropical_Beach_3k.hdr
+background_texture2 texture/Tropical_Beach_3k.bmp
 map_coef1 -1 0 1 0
 map_coef2 -1 0 1 0
 coef1 1

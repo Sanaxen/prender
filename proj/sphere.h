@@ -128,6 +128,34 @@ public:
 				hitpoint->u = phi / PS_TWOPI;
 				hitpoint->v = th / PS_PI;
 
+				if (hitpoint->material.equirectangular_map)
+				{
+					double len = std::sqrt(vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
+					if (len == 0.0)
+					{
+						hitpoint->u = 0.0;
+						hitpoint->v = 0.5;
+					}
+					else
+					{
+						double x = vv.x / len;
+						double y = vv.y / len;
+						double z = vv.z / len;
+
+						double lambda = std::atan2(z, x);          // [-pi, pi]
+						double phi = std::asin(std::fmax(-1.0, std::fmin(1.0, y))); // [-pi/2, pi/2]
+
+						double u = (lambda + PS_PI) / (2.0 * PS_PI); // [0,1)
+						double v = (0.5 * PS_PI - phi) / PS_PI;      // [0,1]
+
+						// wrap/clamp
+						u = u - std::floor(u);
+						if (v < 0.0) v = 0.0; else if (v > 1.0) v = 1.0;
+
+						hitpoint->u = u;
+						hitpoint->v = v;
+					}
+				}
 				if (  hitpoint->material.angular_map )
 				{
 					double r = (1.0 / PS_PI) * acos(vv.z);
@@ -201,6 +229,34 @@ public:
 				hitpoint->u = th / PS_PI;
 				hitpoint->v = phi / PS_TWOPI;
 
+				if (hitpoint->material.equirectangular_map)
+				{
+					double len = std::sqrt(vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
+					if (len == 0.0)
+					{
+						hitpoint->u = 0.0;
+						hitpoint->v = 0.5;
+					}
+					else
+					{
+						double x = vv.x / len;
+						double y = vv.y / len;
+						double z = vv.z / len;
+
+						double lambda = std::atan2(z, x);          // [-pi, pi]
+						double phi = std::asin(std::fmax(-1.0, std::fmin(1.0, y))); // [-pi/2, pi/2]
+
+						double u = (lambda + PS_PI) / (2.0 * PS_PI); // [0,1)
+						double v = (0.5 * PS_PI - phi) / PS_PI;      // [0,1]
+
+						// wrap/clamp
+						u = u - std::floor(u);
+						if (v < 0.0) v = 0.0; else if (v > 1.0) v = 1.0;
+
+						hitpoint->u = u;
+						hitpoint->v = v;
+					}
+				}
 				// http://www.pauldebevec.com/Probes/
 				// Thus, if we consider the images to be normalized to have coordinates u=[-1,1], v=[-1,1], 
 				// we have theta=atan2(v,u), phi=pi*sqrt(u*u+v*v). 
@@ -279,6 +335,34 @@ public:
 				hitpoint->u = th/PS_PI;
 				hitpoint->v = phi/PS_TWOPI;
 
+				if (hitpoint->material.equirectangular_map)
+				{
+					double len = std::sqrt(vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
+					if (len == 0.0)
+					{
+						hitpoint->u = 0.0;
+						hitpoint->v = 0.5;
+					}
+					else
+					{
+						double x = vv.x / len;
+						double y = vv.y / len;
+						double z = vv.z / len;
+
+						double lambda = std::atan2(z, x);          // [-pi, pi]
+						double phi = std::asin(std::fmax(-1.0, std::fmin(1.0, y))); // [-pi/2, pi/2]
+
+						double u = (lambda + PS_PI) / (2.0 * PS_PI); // [0,1)
+						double v = (0.5 * PS_PI - phi) / PS_PI;      // [0,1]
+
+						// wrap/clamp
+						u = u - std::floor(u);
+						if (v < 0.0) v = 0.0; else if (v > 1.0) v = 1.0;
+
+						hitpoint->u = u;
+						hitpoint->v = v;
+					}
+				}
 				if (  hitpoint->material.angular_map )
 				{
 					double r = (1.0 / PS_PI) * acos(vv.z);

@@ -237,6 +237,8 @@ public:
 	std::string background_texture[2];
 	double background_texture_map_coef[2][4];
 	double background_texture_coef[2];
+	
+	int special_relativity_effects;
 
 	//ÉèÅ[ÉÄÉzÅ[Éã
 	WormHole* wormhole_;
@@ -250,6 +252,8 @@ public:
 	bool wormHole_exist;
 	bool wormHolePos_set;
 
+	Vector3d velocity;
+
 	ScenObjct EntList;
 	void Default()
 	{
@@ -261,6 +265,7 @@ public:
 		blackHolePos_set = false;
 		blackHole_exist = false;
 		blackhole_disk = false;
+		special_relativity_effects = 0;
 
 		background_texture_map_coef[0][0] = 1.0;
 		background_texture_map_coef[0][1] = 0.0;
@@ -285,6 +290,9 @@ public:
 
 		blackHole = 0;
 		wormhole_ = 0;
+
+		velocity = Vector3d(0, 0, 0);
+
 
 		imageDumpTime = 60;
 		rand_.seed(time(NULL));
@@ -397,6 +405,7 @@ public:
 					set_Variable(name, val);
 					continue;
 				}
+				//
 				if (strcmp(buf, "TIMELIMIT\n") == 0)
 				{
 					getLine(buf, 1024, fp);
@@ -453,6 +462,20 @@ public:
 					sscanf(buf, "%d", &supersamples);
 					continue;
 				}
+				if (strcmp(buf, "velocity\n") == 0)
+				{
+					getLine(buf, 1024, fp);
+					sscanf3f(buf, "%lf %lf %lf", &velocity.x, &velocity.y, &velocity.z);
+					printf("VELOCITY:%f %f %f\n", velocity.x, velocity.y, velocity.z);
+					continue;
+				}
+				//
+				if (strcmp(buf, "special_relativity_effects\n") == 0)
+				{
+					getLine(buf, 1024, fp);
+					special_relativity_effects = atoi(buf);
+					continue;
+				}
 				if ( strcmp(buf, "CAMERA_POS\n") == 0 )
 				{
 					double x, y, z;
@@ -481,7 +504,7 @@ public:
 				{
 					double x, y, z;
 					getLine(buf, 1024, fp);
-					sscanf(buf, "%lf %lf %lf", &x, &y, &z);
+					sscanf3f(buf, "%lf %lf %lf", &x, &y, &z);
 					camera_up = Vector3d(x, y, z);
 					continue;
 				}
@@ -1074,6 +1097,14 @@ public:
 						if ( strncmp(buf, "ibl_texture_coef ", 17) == 0 )
 						{
 							sscanf1fs(buf, "ibl_texture_coef %lf", &material.ibl_texture_coef);
+							continue;
+						}
+						//
+						if (strncmp(buf, "equirectangular_map ", 20) == 0)
+						{
+							int dmy;
+							sscanf(buf, "equirectangular_map %d", &dmy);
+							material.equirectangular_map = dmy;
 							continue;
 						}
 						if ( strncmp(buf, "hemisphere_map ", 15) == 0 )
@@ -1864,7 +1895,10 @@ public:
 		printf("CAMERA_DIR %f %f %f\n", camera_dir.x, camera_dir.y, camera_dir.z);
 
 		printf("  CAMERA_UPVEC %f %f %f\n", camera_up.x, camera_up.y, camera_up.z);
+		printf("VELOCITY:%f %f %f\n", velocity.x, velocity.y, velocity.z);
+
 		printf("gamma_offset:%f\n", gamma_offset);
+
 		//const Vector3d screen_x = normalize(cross(camera_dir, camera_up));
 		//camera_up = normalize(cross(screen_x, camera_dir));
 

@@ -1,0 +1,10 @@
+set IMAGEDUMP=5
+
+set IMAGE_X=4000*0.2
+set IMAGE_Y=2000*0.2
+
+set SAMPLING=40
+set SUPERSAMPLING=1
+set NEXTEVENTESTIMATION=0
+
+call render wormHole002a2.txt

@@ -19,6 +19,8 @@
 #include "mlt.h"
 #include "erpt.h"
 
+#include "relativistic.h"
+
 namespace prender {
 
 // concentricにサンプリング
@@ -85,6 +87,11 @@ public:
 	Vector3d screen_center;
 
 
+	// 相対論的パラメータ
+	Vector3d velocity;      // 速度（c = 1の単位系）
+	double beta;            // v/c（速度の大きさ）
+	double gamma;           // ローレンツ因子
+
 	int width;
 	int height;
 	int size;
@@ -123,6 +130,15 @@ public:
 		size = width*height;
 		focalDistance = env_p->focalDistance;
 		lensRadius = env_p->lensRadius;
+
+		setVelocity(env_p->velocity);
+	}
+	// 速度を設定
+	void setVelocity(Vector3d vel) {
+		velocity = vel;
+		beta = velocity.length();
+		if (beta > 0.999999) beta = 0.999999;
+		gamma = (beta > 1e-6) ? 1.0 / std::sqrt(1.0 - beta * beta) : 1.0;
 	}
 };
 
@@ -1235,6 +1251,13 @@ public:
 
 								Ray ray(cameraScreen.camera_position, dir);
 
+								//相対論的光行差（Relativistic Aberration of Light）
+								if (env_p->special_relativity_effects &&  env_p->velocity.length() > 1.0e-10)
+								{
+									ray.dir = applyRelativisticAberration(ray.dir, env_p->velocity, cameraScreen.beta, cameraScreen.gamma);
+									ray.doppler_factor = calculateDopplerFactor(ray.dir, env_p->velocity, cameraScreen.beta);
+								}
+
 #if 10
 								// レイがレンズにあたって屈折することでDOFが発生する。
 								if (cameraScreen.lensRadius > 0.0)
@@ -1265,6 +1288,16 @@ public:
 #endif
 								//放射輝度の計算
 								Spectrum v = radiance(0, env_p, ray, &(rnd[thread_id]), 0, wavelength, nextEventEstimation, participatingMedia)*smp;
+
+								//ドップラー効果（Doppler Effect）
+								if (env_p->special_relativity_effects && env_p->velocity.length() > 1.0e-10)
+								{
+#ifdef SPECTRUM_USE
+									v = v / ray.doppler_factor;
+#else
+									v = applyDopplerShiftFull(v, ray.doppler_factor);
+#endif
+								}
 
 								accumulated_radiance = accumulated_radiance + Spectrum2RGB(wavelength)*v / wavelength_pdf;
 

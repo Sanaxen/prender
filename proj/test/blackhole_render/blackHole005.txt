@@ -1,0 +1,136 @@
+IMAGE
+192 144
+
+320 240
+160 120
+
+OUTPUT
+blackHole005.hdr
+
+SCREEN
+20*50 20*50 19*30
+
+#TIMELIMIT
+10000
+
+SAMPLING
+1
+
+THREAD
+15
+
+DEPTH
+1
+
+DEPTH_LIMIT
+1
+
+SUPERSAMPLING
+4
+
+#gamma_offset
+#0.3
+
+VAR X
+165
+
+VAR Y
+45
+
+VAR Z
+50
+
+VAR A
+%XX%
+
+VAR B
+%YY%
+
+VAR C
+%ZZ%
+
+VAR D
+%XXX%
+
+VAR E
+%YYY%
+
+VAR F
+%ZZZ%
+
+
+VAR G
+%VX%
+
+VAR H
+%VY%
+
+VAR I
+%VZ%
+
+VAR J
+%ZDIR%
+
+CAMERA_POS
+A B C
+
+CAMERA_DIR
+D E F
+
+CAMERA_UPVEC
+0.0 0.0 J
+
+velocity
+G H I
+
+#OBJECT
+sphere X Y Z 4000
+emission 0 0 0
+color 0 0 0
+reflection specular
+ibl_texture texture/starmap_2020_4k_print(Deep Star Maps 2020).bmp
+ibl_texture_coef 1.5
+equirectangular_map 1
+#panoramic_map 1
+#angular_map 1
+#hemisphere_map 1
+normal -1
+
+
+
+OBJECT
+disk X Y Z 35
+nromal 0 0 1
+#translate -X -Y -Z
+#rotation 0 0 90
+#translate X Y Z
+emission 0.8 0.8 0.8
+color 0.01 0.01 0.01
+reflection diffuse
+disk_map 1
+coef 2
+blackhole_disk 0
+
+#Special relativity effects
+special_relativity_effects
+1
+
+#Ignoring general relativity
+#OBJECT
+sphere  X Y Z 5
+emission 0 0 0
+color 0.0 0.0 0.0
+reflection diffuse
+
+
+BLACKHOLE X Y Z
+initial_condition 0
+geodesics_max_length 3000
+angular_momentum 0.0
+accretion_disk 18
+accretion_disk_texture texture/adisk0.bmp
+#background_texture texture/bgedit.bmp
+#background_texture texture/starmap_2020_4k_print(Deep Star Maps 2020).bmp
+#map_coef 1 -pi/4 1 0
+background_texture texture/Interstellar.bmp
+map_coef 1 0 1 pi/4+0.25

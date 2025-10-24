@@ -1,0 +1,86 @@
+IMAGE
+192 144
+
+320 240
+160 120
+
+OUTPUT
+blackHole004.hdr
+
+SCREEN
+20*5 20*5 9*5
+
+#TIMELIMIT
+10000
+
+SAMPLING
+1
+
+THREAD
+15
+
+DEPTH
+1
+
+DEPTH_LIMIT
+1
+
+SUPERSAMPLING
+4
+
+#gamma_offset
+#0.3
+
+VAR X
+165
+
+VAR Y
+45
+
+VAR Z
+50
+
+VAR T
+%XX%
+
+CAMERA_POS
+X+50-50*T*0.1/50 Y Z+2.5
+#(1.6-1.6*pow(T*0.1/50,7)*1.2)
+#X+50-0.1*T*pow(T*0.1/50,3) Y+0.5 Z+3-1*pow(T*0.1/50,7)
+#X+50*cos(0*pi/180) Y+50*sin(0*pi/180) 55.0
+
+CAMERA_DIR
+-1 0 -0.03
+#-1+pow(T*0.1/50,9) 0 pow(T*0.1/50,9)
+#X-(X+50-50*T*0.1/50) 0 -1.5
+#-(Z+1.6-1.6*pow(T*0.1/50,7)*1.2)
+
+-1 0 0
+#-50*cos(0*pi/180) -50*sin(0*pi/180) 0.0
+
+CAMERA_UPVEC
+0.0 0.0 1.0
+
+
+OBJECT
+disk X Y Z 35
+nromal 0 0 1
+#translate -X -Y -Z
+#rotation 0 0 90
+#translate X Y Z
+emission 0.8 0.8 0.8
+color 0.01 0.01 0.01
+reflection diffuse
+disk_map 1
+coef 2
+blackhole_disk 0
+
+BLACKHOLE X Y Z
+geodesics_max_length 2000
+angular_momentum 0.0
+accretion_disk 18
+accretion_disk_texture texture/adisk0.bmp
+#background_texture texture/bgedit.bmp
+#background_texture texture/InterstellarWormhole_Fig6b.bmp
+background_texture texture/Interstellar.bmp
+map_coef 1 0 1 pi/4+0.25
