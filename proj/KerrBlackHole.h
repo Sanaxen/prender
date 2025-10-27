@@ -11,6 +11,8 @@
 
 #include "constant.h"
 #include "vector3d.h"
+
+
 using namespace prender;
 
 #define EVENT_HORIZON	-998
@@ -62,6 +64,7 @@ public:
 
 	double geodesics_max_length;
 
+	Vector3d camera_pos;
 	Vector3d camera_dir;
 	Vector3d position;
 	Matrix4D Mat;
@@ -73,10 +76,14 @@ public:
 	double background_texture_map_coef[4];
 	double background_texture_coef;
 
+	int use_accretion_disk_temperature;
+
 	KerrBlackHole(double x_, double y_, double z_, double rDisc_, double m, double a_, Vector3d& cameraPos, Vector3d& cameraDir)
 	{
+		use_accretion_disk_temperature = 0;
 		background_texture = "";
 
+		camera_pos = cameraPos;
 		camera_dir = normalize(cameraDir);
 		traceDir = 1.0;
 		rDisc = rDisc_;
@@ -1292,4 +1299,145 @@ inline void binarysearch(KerrBlackHoleWrkParam& prm, KerrBlackHole& kerrBlackHol
 	}
 }
 
+// ケプラー回転速度を計算（GM=1の単位系）
+// v = sqrt(GM/r) = sqrt(1/r)
+// 光速 c=1 の単位系なので β = v/c = v
+inline double getKeplerianVelocity(double radius) {
+	// 簡略化: v/c = sqrt(1/r)
+	// 実際にはブラックホール近傍では一般相対論的補正が必要
+	return std::sqrt(1.0 / radius);
+}
+// 降着円盤上の点の速度ベクトルを計算
+inline Vector3d getDiskVelocity(const Vector3d& position, const Vector3d& disk_center, const Vector3d& rotation_axis, const double rotation_sign=1.0)
+{
+	// ブラックホール中心からの相対位置
+	Vector3d r_vec = position - disk_center;
+
+	// 円盤平面上での距離
+	double r = r_vec.length();
+
+	if (r < 1e-6) return Vector3d(0, 0, 0);
+
+	// ケプラー速度の大きさ
+	double v_magnitude = getKeplerianVelocity(r);
+
+	// 速度方向 = rotation_axis × r_vec (外積)
+	Vector3d velocity_direction(
+		rotation_axis.y * r_vec.z - rotation_axis.z * r_vec.y,
+		rotation_axis.z * r_vec.x - rotation_axis.x * r_vec.z,
+		rotation_axis.x * r_vec.y - rotation_axis.y * r_vec.x
+	);
+
+	velocity_direction = normalize(velocity_direction);
+
+	// 回転方向を適用
+	return velocity_direction * (v_magnitude * rotation_sign);
+}
+
+// 観測者から見たドップラー因子を計算
+inline double calculateDopplerFactorFromObserver(const Vector3d& disk_point,
+	const Vector3d& disk_velocity,
+	const Vector3d& observer_position) {
+	// 観測方向（観測者から円盤の点へ）
+	Vector3d to_disk = disk_point - observer_position;
+	Vector3d viewing_direction = normalize(to_disk);
+
+	// 速度の大きさ（光速の割合）
+	double beta = disk_velocity.length();
+
+	if (beta < 1e-6) return 1.0;
+
+	// 速度方向
+	Vector3d velocity_direction = normalize(disk_velocity);
+
+	// 視線方向と速度方向の内積
+	// 注意: ここでは視線は「観測者→円盤」なので、
+	// 円盤が観測者に近づく場合は cos_theta > 0
+	double cos_theta = dot(viewing_direction,velocity_direction);
+
+	// 相対論的ドップラー因子
+	// 近づく場合: doppler > 1 (青方偏移)
+	// 遠ざかる場合: doppler < 1 (赤方偏移)
+	double gamma = 1.0 / std::sqrt(1.0 - beta * beta);
+	double doppler = 1.0 / (gamma * (1.0 - beta * cos_theta));
+
+	return doppler;
+}
+
+// 標準降着円盤の温度分布（幾何学単位系 G = c = 1）
+inline double accretionDiskTemperatureGeom(
+	double r,           // ブラックホールからの距離 [M単位]
+	double M,           // ブラックホール質量（通常は1に規格化）
+	double r_in         // 内縁半径（通常はISCO） [M単位]
+) {
+
+	// 降着率（エディントン降着率の10%）
+	double Mdot_Edd = (4.0 * M_PI * 1.67262192369e-27) /(0.1 *  6.6524587158e-29);
+	double Mdot = 0.1 * Mdot_Edd;
+
+	// 幾何学単位系では: G = c = 1
+	// 温度を実際の物理単位に変換する際、M_SI が必要
+
+	if (r <= r_in) return 0.0;  // 内縁より内側
+
+	// 無次元温度パラメータ（実際の温度を得るには M_SI が必要）
+	// T^4 ∝ (M_dot / r^3) * (1 - sqrt(r_in/r))
+
+	double factor = Mdot / (r * r * r);
+	double innerBoundary = 1.0 - std::sqrt(r_in / r);
+
+	if (innerBoundary < 0) innerBoundary = 0;
+
+	// 無次元温度の4乗
+	double T4_dimensionless = factor * innerBoundary;
+
+	return std::pow(T4_dimensionless, 0.25);
+}
+
+// 黒体放射の近似的なRGB変換（温度[K] -> RGB）
+inline Color temperatureToRGB(double temp) {
+	// 簡略化した黒体放射の色近似
+	// 実際のプランク関数を使う場合はより正確
+	temp = Clamp(temp, 1000.0, 40000.0);
+	temp /= 100.0;
+
+	double r, g, b;
+
+	// 赤チャンネル
+	if (temp <= 66) {
+		r = 255;
+	}
+	else {
+		r = temp - 60;
+		r = 329.698727446 * std::pow(r, -0.1332047592);
+		r = Clamp(r, 0.0, 255.0);
+	}
+
+	// 緑チャンネル
+	if (temp <= 66) {
+		g = temp;
+		g = 99.4708025861 * std::log(g) - 161.1195681661;
+		g = Clamp(g, 0.0, 255.0);
+	}
+	else {
+		g = temp - 60;
+		g = 288.1221695283 * std::pow(g, -0.0755148492);
+		g = Clamp(g, 0.0, 255.0);
+	}
+
+	// 青チャンネル
+	if (temp >= 66) {
+		b = 255;
+	}
+	else if (temp <= 19) {
+		b = 0;
+	}
+	else {
+		b = temp - 10;
+		b = 138.5177312231 * std::log(b) - 305.0447927307;
+		b = Clamp(b, 0.0, 255.0);
+	}
+
+	return Color(r / 255.0, g / 255.0, b / 255.0);
+}
 #endif

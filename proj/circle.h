@@ -6,6 +6,9 @@
 
 #include"KerrBlackHole.h"
 #include "WormHole.h"
+//#include "relativistic.h"
+inline Color applyDopplerShiftFull(const Color& original_color, double doppler_factor);
+
 
 namespace prender {
 	extern KerrBlackHole* BlackHole;
@@ -256,13 +259,26 @@ namespace prender {
 							{
 								return false;
 							}
+#if 10
 							Rgb t = discTexture[blackhole_disk]->cell(yPos, xPos);
+
+							double tmp_r = (hitpoint->position - BlackHole->position).length();
 
 							hitpoint->material.color.x = (double)t.r / 255.0;
 							hitpoint->material.color.y = (double)t.g / 255.0;
 							hitpoint->material.color.z = (double)t.b / 255.0;
+							if (BlackHole->use_accretion_disk_temperature)
+							{
+
+								double temperature = accretionDiskTemperatureGeom(tmp_r, 1.0, BlackHole->Rmstable);
+
+								Color tmp_color = temperatureToRGB(temperature);
+							
+								hitpoint->material.color = adjustToSourceLuminance(hitpoint->material.color, tmp_color);
+							}
+							
 							//hitpoint->material.emission = ((Circle*)this)->material()->ibl_texture_coef*hitpoint->material.color;
-							hitpoint->material.emission = hitpoint->material.emission*hitpoint->material.color;
+							hitpoint->material.emission = hitpoint->material.emission * hitpoint->material.color;
 
 							//alp = hitpoint->material.color.length()/3.0;
 							alp = (double)t.alp / 255.0;
@@ -272,6 +288,29 @@ namespace prender {
 							//	alp *= exp(-pow(s.r - BlackHole->Rdisk*0.7, 1.2));
 							//}
 							//if (alp < 0.001) alp = 0.0;
+							
+							Vector3d velocity = getDiskVelocity(hitpoint->position, BlackHole->position, Vector3d(0, 0, 1), -1.0);
+						
+							double tmp_omg = 1.0 / (pow(tmp_r, 3.0 / 2.0) + BlackHole->a);
+							double tmp_delt = tmp_r * tmp_r - 2.0 * tmp_r + BlackHole->a * BlackHole->a;
+							double tmp_A = pow(tmp_r, 4.0) + BlackHole->a * BlackHole->a * tmp_r * tmp_r + 2.0 * BlackHole->a * BlackHole->a * tmp_r;
+							double tmp_o = 2.0 * BlackHole->a * tmp_r / tmp_A;
+
+							velocity = normalize(velocity) * (tmp_omg - tmp_o)*tmp_A/(tmp_r*tmp_r*sqrt(tmp_delt));
+							//velocity = normalize(velocity) * sqrt(tmp_r) / sqrt(fabs(1.0 - 2.0 / tmp_r) + 1.0e-10);
+
+							//printf("------------------ %f (%f,%f,%f)\n", velocity.length(), hitpoint->material.color.x, hitpoint->material.color.y, hitpoint->material.color.z);
+							// ドップラー因子を計算
+							double doppler = calculateDopplerFactorFromObserver(
+								hitpoint->position, velocity, BlackHole->camera_pos);
+
+							hitpoint->material.color = applyDopplerShiftFull(hitpoint->material.color, doppler);
+							hitpoint->material.emission = applyDopplerShiftFull(hitpoint->material.emission, doppler);
+							//printf("------------------color (%f,%f,%f)\n",  hitpoint->material.color.x, hitpoint->material.color.y, hitpoint->material.color.z);
+							//printf("------------------emission (%f,%f,%f)\n", hitpoint->material.emission.x, hitpoint->material.emission.y, hitpoint->material.emission.z);
+#else
+							hitpoint->material.color = Color(255.0, 0, 0);
+#endif
 						}
 						else
 						{

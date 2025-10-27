@@ -1,0 +1,121 @@
+IMAGE
+192 144
+
+320 240
+160 120
+
+OUTPUT
+blackHole001a.hdr
+
+SCREEN
+30.0 30.0 40.0
+
+#TIMELIMIT
+10000
+
+SAMPLING
+1
+
+THREAD
+5
+
+DEPTH
+3
+
+DEPTH_LIMIT
+4
+
+SUPERSAMPLING
+4
+
+VAR X
+165
+
+VAR Y
+45
+
+VAR Z
+50
+
+VAR XX
+%CPX%
+
+VAR ZZ
+%CPZ%
+
+VAR XXX
+%CDX%
+
+VAR ZZZ
+%CDZ%
+
+CAMERA_POS
+XX Y Z+ZZ
+
+180 Y Z+70
+
+
+CAMERA_DIR
+XXX 0 ZZZ
+
+-0.2 0 -0.95
+
+-1 0 0
+
+
+CAMERA_UPVEC
+0.0 0.0 1.0
+
+use_accretion_disk_temperature
+1
+
+
+
+#OBJECT
+sphere 0 0 0 3000
+emission 0 0 0
+color 0 0 0
+reflection diffuse
+ibl_texture texture/InterstellarWormhole_Fig6b.bmp
+ibl_texture_coef 0.001
+panoramic_map 1
+normal -1
+
+
+OBJECT
+disk X Y Z 35*0.7
+nromal 0 0 1
+emission 1.5 1.4 1.0
+color 0.01 0.01 0.01
+reflection diffuse
+disk_map 1
+blackhole_disk 0
+
+OBJECT
+disk X Y Z 50*0.7
+nromal 0 0 1
+emission 1.5 1.4 1.0
+color 0.01 0.01 0.01
+reflection diffuse
+disk_map 1
+blackhole_disk 1
+
+OBJECT
+disk X Y Z 50*0.7
+nromal 0 0 1
+emission 1.5 1.4 1.0
+color 1 1 1
+reflection diffuse
+disk_map 1
+blackhole_disk 2
+
+BLACKHOLE X Y Z
+geodesics_max_length 2000
+angular_momentum 0.3
+accretion_disk 16
+accretion_disk_texture texture/accretion_disk2.png
+accretion_disk_texture texture/accretion_disk0.png
+accretion_disk_texture texture/accretion_disk1.png
+background_texture texture/InterstellarWormhole_Fig6b.bmp
+#map_coef 1 pi/2 1 pi/2
+

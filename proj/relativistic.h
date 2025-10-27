@@ -5,7 +5,7 @@
 #include "def.h"
 
 // 相対論的収差を適用したレイ方向の変換
-Vector3d applyRelativisticAberration(const Vector3d& ray_dir, const Vector3d& velocity, double beta, double gamma) {
+inline Vector3d applyRelativisticAberration(const Vector3d& ray_dir, const Vector3d& velocity, double beta, double gamma) {
 
     if (beta < 1e-6) return ray_dir; // 速度が小さい場合は変換不要
 
@@ -40,7 +40,7 @@ Vector3d applyRelativisticAberration(const Vector3d& ray_dir, const Vector3d& ve
 }
 
 // ドップラー因子を計算
-double calculateDopplerFactor(const Vector3d& ray_dir, const Vector3d& velocity, double beta) {
+inline double calculateDopplerFactor(const Vector3d& ray_dir, const Vector3d& velocity, double beta) {
     if (beta < 1e-6) return 1.0;
 
     Vector3d v_norm = normalize(velocity);
@@ -53,13 +53,13 @@ double calculateDopplerFactor(const Vector3d& ray_dir, const Vector3d& velocity,
 }
 
 // 可視光の波長範囲（ナノメートル）
-const double WAVELENGTH_RED = 700.0;
-const double WAVELENGTH_GREEN = 546.1;
-const double WAVELENGTH_BLUE = 435.8;
+#define WAVELENGTH_RED  700.0
+#define WAVELENGTH_GREEN  546.1
+#define WAVELENGTH_BLUE  435.8
 
 // 波長からRGB強度を計算（簡易版）
 // 波長が可視光範囲外の場合は減衰
-double wavelengthToIntensity(double wavelength, double center, double width = 100.0) {
+inline double wavelengthToIntensity(double wavelength, double center, double width = 100.0) {
     double diff = wavelength - center;
     double intensity = std::exp(-(diff * diff) / (2.0 * width * width));
 
@@ -79,7 +79,7 @@ double wavelengthToIntensity(double wavelength, double center, double width = 10
 }
 
 // ドップラー効果をRGB色に適用（方法1: 波長シフト法）
-Color applyDopplerShiftWavelength(const Color& original_color, double doppler_factor) {
+inline Color applyDopplerShiftWavelength(const Color& original_color, double doppler_factor) {
     // 各RGB成分を対応する波長として扱い、シフト
     double shifted_r_wavelength = WAVELENGTH_RED / doppler_factor;
     double shifted_g_wavelength = WAVELENGTH_GREEN / doppler_factor;
@@ -108,7 +108,7 @@ Color applyDopplerShiftWavelength(const Color& original_color, double doppler_fa
 
 // ドップラー効果をRGB色に適用（方法2: 簡易法）
 // より高速だが物理的精度は低い
-Color applyDopplerShiftSimple(const Color& original_color, double doppler_factor) {
+inline Color applyDopplerShiftSimple(const Color& original_color, double doppler_factor) {
     Color shifted = original_color;
 
     if (doppler_factor > 1.0) {
@@ -136,7 +136,7 @@ Color applyDopplerShiftSimple(const Color& original_color, double doppler_factor
 
 // ドップラー効果をRGB色に適用（方法3: 輝度変更も含む）
 // 最も物理的に正確
-Color applyDopplerShiftFull(const Color& original_color, double doppler_factor) {
+ inline Color applyDopplerShiftFull(const Color& original_color, double doppler_factor) {
     // ドップラー因子の4乗で輝度が変化（相対論的ビーミング効果）
     double intensity_factor = doppler_factor * doppler_factor *
         doppler_factor * doppler_factor;

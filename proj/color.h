@@ -43,5 +43,37 @@ inline Color* FloatToColor(const float* data, const int width, const int height)
 	return image;
 }
 
+
+// RGBから輝度を計算（ITU-R BT.709規格）
+inline double calculateLuminance(const Color& color) {
+    return 0.2126 * color.x + 0.7152 * color.y + 0.0722 * color.z;
+}
+// ターゲットの輝度をソースと同じ輝度に調整
+inline Color adjustLuminance(const Color& target, double desiredLuminance) {
+    double currentLuminance = calculateLuminance(target);
+
+    // 黒の場合は均等に輝度を分配
+    if (currentLuminance == 0.0) {
+        int value = Clamp(static_cast<int>(std::round(desiredLuminance / 0.2126)), 0, 255);
+        return Color(value, value, value);
+    }
+
+    // スケーリング係数を計算
+    double scale = desiredLuminance / currentLuminance;
+
+    return Color(
+        Clamp(static_cast<int>(std::round(target.x * scale)), 0, 255),
+        Clamp(static_cast<int>(std::round(target.y * scale)), 0, 255),
+        Clamp(static_cast<int>(std::round(target.z * scale)), 0, 255)
+    );
+}
+// ソースの輝度でターゲットを調整
+inline Color adjustToSourceLuminance(const Color& source, const Color& target) {
+    double sourceLuminance = calculateLuminance(source);
+    return adjustLuminance(target, sourceLuminance);
+}
+
+
+
 };
 #endif

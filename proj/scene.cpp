@@ -2,6 +2,8 @@
 
 #include "KerrBlackHole.h"
 #include "WormHole.h"
+#include "relativistic.h"
+
 
 namespace prender {
 
@@ -570,6 +572,17 @@ namespace prender {
 						intersection->object_id = EVENT_HORIZON;
 						return false;
 					}
+
+					//if (intersection->object_id == ENTITY_TYPE_CIRCLE)
+					//{
+					//	Vector3d velocity = getDiskVelocity(intersection->hitpoint.position, kb.position, Vector3d(0,0,1),1.0);
+					//	
+					//	// ドップラー因子を計算
+					//	double doppler = calculateDopplerFactorFromObserver(
+					//		intersection->hitpoint.position, velocity, kb.camera_pos);
+					//	
+					//	intersection->hitpoint.material.color = applyDopplerShiftFull(intersection->hitpoint.material.color, ray.doppler_factor);
+					//}
 					return true;
 				}
 			}/*else

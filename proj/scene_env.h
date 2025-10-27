@@ -239,6 +239,7 @@ public:
 	double background_texture_coef[2];
 	
 	int special_relativity_effects;
+	int use_accretion_disk_temperature;
 
 	//ƒ[ƒ€ƒz[ƒ‹
 	WormHole* wormhole_;
@@ -266,6 +267,7 @@ public:
 		blackHole_exist = false;
 		blackhole_disk = false;
 		special_relativity_effects = 0;
+		use_accretion_disk_temperature = 0;
 
 		background_texture_map_coef[0][0] = 1.0;
 		background_texture_map_coef[0][1] = 0.0;
@@ -476,6 +478,13 @@ public:
 					special_relativity_effects = atoi(buf);
 					continue;
 				}
+				if (strcmp(buf, "use_accretion_disk_temperature\n") == 0)
+				{
+					getLine(buf, 1024, fp);
+					use_accretion_disk_temperature = atoi(buf);
+					continue;
+				}
+				//
 				if ( strcmp(buf, "CAMERA_POS\n") == 0 )
 				{
 					double x, y, z;
@@ -2034,6 +2043,7 @@ public:
 			}
 			blackHole = new KerrBlackHole(blackHolePos.x, blackHolePos.y, blackHolePos.z, accretion_disk, 1.0, angular_momentum, camera_position, camera_dir);
 			
+			blackHole->use_accretion_disk_temperature = use_accretion_disk_temperature;
 			blackHole->initial_condition = initial_condition;
 			blackHole->geodesics_max_length = geodesics_max_length;
 			blackHole->accretion_disk_texture = accretion_disk_texture;
