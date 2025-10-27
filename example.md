@@ -97,13 +97,28 @@ https://hp.vector.co.jp/authors/VA014310/pika_13s.lzh
 
 ## Inspired by the movie Interstellar.  
 <img src="./images/CornellBox_blackHole001_3x1_20480.5(3spp).png"  width="50%%">
-<img src="./images/CornellBox_blackHole001_4x1_14540.8(4spp).png"  width="60%%">
+<img src="./images/CornellBox_blackHole001_4x1_14540.8(4spp).png"  width="60%%">  
+
+### Doppler effect
+<img src="./images/image0.bmp"  width="80%%">  
+<img src="./images/image1.bmp"  width="80%%">  
+
+
+---
+
+## Special relativity effects
+### Relativistic Aberration & Doppler effect
+<img src="./images/image143.bmp"  width="50%%">
 
 ## Differences in appearance of Kerr black holes due to differences in angular momentum  
 <img src="./images/CornellBox_blackHole01_1x3_2849.0(9spp).png"  width="50%%"><img src="./images/CornellBox_blackHole02_1x3_2773.2(9spp).png"  width="50%%">
 
+---
+## Why Different?
+<img src="./images/eth.png"  width="90%%">  
+<img src="./images/eth.gif"  width="90%%">
 
-
+---  
 ## **Wormhole**
 <img src="./images/eq4.png"  width="80%%">
 <img src="./images/eq3_1.png"  width="30%%">  
