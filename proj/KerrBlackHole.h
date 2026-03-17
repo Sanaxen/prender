@@ -71,6 +71,8 @@ public:
 	Matrix4D invMat;
 	int initial_condition;
 
+	int color_doppler_factor_effect = 0;
+
 	std::vector<std::string> accretion_disk_texture;
 	std::string background_texture;
 	double background_texture_map_coef[4];

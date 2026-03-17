@@ -303,9 +303,13 @@ namespace prender {
 							// ドップラー因子を計算
 							double doppler = calculateDopplerFactorFromObserver(
 								hitpoint->position, velocity, BlackHole->camera_pos);
+							
+							if (BlackHole->color_doppler_factor_effect)
+							{
 
-							hitpoint->material.color = applyDopplerShiftFull(hitpoint->material.color, doppler);
-							hitpoint->material.emission = applyDopplerShiftFull(hitpoint->material.emission, doppler);
+								hitpoint->material.color = applyDopplerShiftFull(hitpoint->material.color, doppler);
+								hitpoint->material.emission = applyDopplerShiftFull(hitpoint->material.emission, doppler);
+							}
 							//printf("------------------color (%f,%f,%f)\n",  hitpoint->material.color.x, hitpoint->material.color.y, hitpoint->material.color.z);
 							//printf("------------------emission (%f,%f,%f)\n", hitpoint->material.emission.x, hitpoint->material.emission.y, hitpoint->material.emission.z);
 #else

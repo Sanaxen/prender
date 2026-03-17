@@ -240,6 +240,7 @@ public:
 	
 	int special_relativity_effects;
 	int use_accretion_disk_temperature;
+	int color_doppler_factor_effect;
 
 	//ƒ[ƒ€ƒz[ƒ‹
 	WormHole* wormhole_;
@@ -268,6 +269,7 @@ public:
 		blackhole_disk = false;
 		special_relativity_effects = 0;
 		use_accretion_disk_temperature = 0;
+		color_doppler_factor_effect = 0;
 
 		background_texture_map_coef[0][0] = 1.0;
 		background_texture_map_coef[0][1] = 0.0;
@@ -476,6 +478,7 @@ public:
 				{
 					getLine(buf, 1024, fp);
 					special_relativity_effects = atoi(buf);
+					printf("special_relativity_effects:%d\n", special_relativity_effects);
 					continue;
 				}
 				if (strcmp(buf, "use_accretion_disk_temperature\n") == 0)
@@ -484,6 +487,14 @@ public:
 					use_accretion_disk_temperature = atoi(buf);
 					continue;
 				}
+				if (strcmp(buf, "color_doppler_factor\n") == 0)
+				{
+					getLine(buf, 1024, fp);
+					color_doppler_factor_effect = atoi(buf);
+					printf("color_doppler_factor:%d\n", color_doppler_factor_effect);
+					continue;
+				}
+				//
 				//
 				if ( strcmp(buf, "CAMERA_POS\n") == 0 )
 				{
@@ -2048,6 +2059,7 @@ public:
 			blackHole->geodesics_max_length = geodesics_max_length;
 			blackHole->accretion_disk_texture = accretion_disk_texture;
 			blackHole->background_texture = background_texture[0];
+			blackHole->color_doppler_factor_effect = color_doppler_factor_effect;
 			for (int ii = 0; ii < blackHole->accretion_disk_texture.size(); ii++)
 			{
 				printf("accretion_disk_texture[%d][%s]\n", ii, blackHole->accretion_disk_texture[ii].c_str());

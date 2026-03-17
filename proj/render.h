@@ -1292,11 +1292,14 @@ public:
 								//ドップラー効果（Doppler Effect）
 								if (env_p->special_relativity_effects && env_p->velocity.length() > 1.0e-10)
 								{
+									if (env_p->color_doppler_factor_effect)
+									{
 #ifdef SPECTRUM_USE
-									v = v / ray.doppler_factor;
+										v = v / ray.doppler_factor;
 #else
-									v = applyDopplerShiftFull(v, ray.doppler_factor);
+										v = applyDopplerShiftFull(v, ray.doppler_factor);
 #endif
+									}
 								}
 
 								accumulated_radiance = accumulated_radiance + Spectrum2RGB(wavelength)*v / wavelength_pdf;
