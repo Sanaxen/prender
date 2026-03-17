@@ -487,11 +487,11 @@ public:
 					use_accretion_disk_temperature = atoi(buf);
 					continue;
 				}
-				if (strcmp(buf, "color_doppler_factor\n") == 0)
+				if (strcmp(buf, "color_doppler_factor_effect\n") == 0)
 				{
 					getLine(buf, 1024, fp);
 					color_doppler_factor_effect = atoi(buf);
-					printf("color_doppler_factor:%d\n", color_doppler_factor_effect);
+					printf("color_doppler_factor_effect:%d\n", color_doppler_factor_effect);
 					continue;
 				}
 				//
