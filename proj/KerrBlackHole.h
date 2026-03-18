@@ -1342,6 +1342,7 @@ inline double calculateDopplerFactorFromObserver(const Vector3d& disk_point,
 	const Vector3d& observer_position) {
 	// 観測方向（観測者から円盤の点へ）
 	Vector3d to_disk = disk_point - observer_position;
+	//Vector3d to_disk = observer_position - disk_point;
 	Vector3d viewing_direction = normalize(to_disk);
 
 	// 速度の大きさ（光速の割合）

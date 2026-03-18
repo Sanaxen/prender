@@ -304,7 +304,7 @@ namespace prender {
 							double doppler = calculateDopplerFactorFromObserver(
 								hitpoint->position, velocity, BlackHole->camera_pos);
 							
-							if (BlackHole->color_doppler_factor_effect)
+							//if (BlackHole->color_doppler_factor_effect)
 							{
 
 								hitpoint->material.color = applyDopplerShiftFull(hitpoint->material.color, doppler);

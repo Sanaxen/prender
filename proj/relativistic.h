@@ -49,7 +49,9 @@ inline double calculateDopplerFactor(const Vector3d& ray_dir, const Vector3d& ve
     // ドップラー因子: sqrt((1-β)/(1+β)) / (1 - β·cos(θ))
     // または簡略化して: 1 / (γ(1 - β·cos(θ)))
     double denominator = 1.0 - beta * cos_theta;
-    return 1.0 / denominator; // 相対論的ドップラー効果
+
+    double gamma = 1.0 / sqrt(1.0 - beta * beta);
+    return 1.0 / (gamma * denominator); // 相対論的ドップラー効果
 }
 
 // 可視光の波長範囲（ナノメートル）
@@ -141,6 +143,23 @@ inline Color applyDopplerShiftSimple(const Color& original_color, double doppler
     double intensity_factor = doppler_factor * doppler_factor *
         doppler_factor * doppler_factor;
 
+#if 1
+    //実際のところ、可視光の波長シフトは beta=0.6 でも
+    //赤(700nm) → 700 / 1.6 = 437nm（青！）になってしまう
+    //
+    // 波長シフトの強度を調整（0=シフトなし、1=フルシフト）
+    const double WAVELENGTH_SHIFT_STRENGTH = 0.5;  // 試しに弱くする
+
+    Color shifted_wl = applyDopplerShiftWavelength(original_color,
+        1.0 + (doppler_factor - 1.0) * WAVELENGTH_SHIFT_STRENGTH);
+    Color shifted_intensity = original_color * intensity_factor;
+
+    // ブレンド
+    Color shifted = shifted_wl * WAVELENGTH_SHIFT_STRENGTH +
+        shifted_intensity * (1.0 - WAVELENGTH_SHIFT_STRENGTH);
+    return Color(Clamp(shifted.x, 0, 1), Clamp(shifted.y, 0, 1), Clamp(shifted.z, 0, 1));
+
+#else
     // 波長シフトを適用
     Color shifted = applyDopplerShiftWavelength(original_color, doppler_factor);
 
@@ -148,5 +167,6 @@ inline Color applyDopplerShiftSimple(const Color& original_color, double doppler
     shifted = shifted * intensity_factor;
 
     return Color(Clamp(shifted.x, 0, 1), Clamp(shifted.y, 0, 1), Clamp(shifted.z, 0, 1));
+#endif
 }
 #endif
