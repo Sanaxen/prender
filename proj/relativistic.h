@@ -148,7 +148,7 @@ inline Color applyDopplerShiftSimple(const Color& original_color, double doppler
     //赤(700nm) → 700 / 1.6 = 437nm（青！）になってしまう
     //
     // 波長シフトの強度を調整（0=シフトなし、1=フルシフト）
-    const double WAVELENGTH_SHIFT_STRENGTH = 0.5;  // 試しに弱くする
+    const double WAVELENGTH_SHIFT_STRENGTH = 0.2;  // 試しに弱くする
 
     Color shifted_wl = applyDopplerShiftWavelength(original_color,
         1.0 + (doppler_factor - 1.0) * WAVELENGTH_SHIFT_STRENGTH);

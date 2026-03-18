@@ -242,6 +242,8 @@ public:
 	int use_accretion_disk_temperature;
 	int color_doppler_factor_effect;
 
+	int use_mollweide_projection;
+
 	//ÉèÅ[ÉÄÉzÅ[Éã
 	WormHole* wormhole_;
 	Vector3d wormholePos1;
@@ -270,6 +272,8 @@ public:
 		special_relativity_effects = 0;
 		use_accretion_disk_temperature = 0;
 		color_doppler_factor_effect = 0;
+
+		use_mollweide_projection = 0;
 
 		background_texture_map_coef[0][0] = 1.0;
 		background_texture_map_coef[0][1] = 0.0;
@@ -474,6 +478,14 @@ public:
 					continue;
 				}
 				//
+				//
+				if (strcmp(buf, "use_mollweide_projection\n") == 0)
+				{
+					getLine(buf, 1024, fp);
+					use_mollweide_projection = atoi(buf);
+					printf("use_mollweide_projection:%d\n", use_mollweide_projection);
+					continue;
+				}
 				if (strcmp(buf, "special_relativity_effects\n") == 0)
 				{
 					getLine(buf, 1024, fp);

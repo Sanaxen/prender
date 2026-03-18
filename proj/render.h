@@ -1156,6 +1156,7 @@ public:
 			rnd[i].seed(i+1);
 		}
 
+		int use_mollweide_projection = 1;
 
 		int height_last = cameraScreen.height;
 		int height_init = 0;
@@ -1248,8 +1249,8 @@ public:
 								// レイを飛ばす方向
 								const Vector3d dir = normalize(screen_position - cameraScreen.camera_position);
 
-
 								Ray ray(cameraScreen.camera_position, dir);
+
 
 								//相対論的光行差（Relativistic Aberration of Light）
 								if (env_p->special_relativity_effects &&  env_p->velocity.length() > 1.0e-10)
@@ -1273,6 +1274,50 @@ public:
 									ray.dir = normalize(Pfocus - ray.org);
 								}
 #endif
+								bool out_range = false;
+								if (use_mollweide_projection)
+								{
+									double nx = ((r1 + x) * cameraScreen.iw) * 2 - 1;
+									double ny = 1 - ((r2 + y) * cameraScreen.ih) * 2;
+
+									double X = nx * 2.0 * sqrt(2);
+									double Y = ny * sqrt(2);
+
+									if (pow(X / (2 * sqrt(2)), 2) + pow(Y / sqrt(2), 2) > 1.0)
+									{
+										if (use_mollweide_projection) out_range = true;
+									}
+
+									double theta = asin(Y / sqrt(2));
+									double phi = asin((2 * theta + sin(2 * theta)) / M_PI);
+									double lambda = (M_PI * X) / (2 * sqrt(2) * cos(theta));
+
+									Vector3d dir_tmp;
+									dir_tmp.z = cos(phi) * cos(lambda);
+									dir_tmp.y = -sin(phi);
+									dir_tmp.x = cos(phi) * sin(lambda);
+
+
+									Ray ray_mollweide(cameraScreen.camera_position, dir_tmp);
+
+									if (use_mollweide_projection)
+									{
+										// カメラの3軸ベクトルを作る
+										auto forward = normalize(cameraScreen.camera_dir);
+										auto right = normalize(cross(forward, cameraScreen.camera_up));
+										auto up = normalize(cross(right, forward));
+
+										// モルワイデから計算したローカル方向をワールド空間に変換
+										ray_mollweide.dir 
+											= ray_mollweide.dir.x * right
+											+ ray_mollweide.dir.y * up
+											+ ray_mollweide.dir.z * forward;
+
+										ray.dir = normalize(ray_mollweide.dir);
+									}
+								}
+
+
 								double wavelength_pdf = 1.0;
 #ifdef SPECTRUM_USE
 								double wavelength/* = rnd2.next01()*0.720+0.380*/;
@@ -1301,7 +1346,11 @@ public:
 #endif
 									}
 								}
-
+#ifdef SPECTRUM_USE
+								if (out_range) v = 0;
+#else
+								if (out_range) v = Spectrum(0,0,0);
+#endif
 								accumulated_radiance = accumulated_radiance + Spectrum2RGB(wavelength)*v / wavelength_pdf;
 
 							}
