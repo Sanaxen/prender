@@ -1,0 +1,10 @@
+set IMAGEDUMP=10
+
+set IMAGE_X=4096*0.2
+set IMAGE_Y=2048*0.2
+
+set SAMPLING=50
+set SUPERSAMPLING=1
+set NEXTEVENTESTIMATION=0
+
+call render blackHole004.txt
