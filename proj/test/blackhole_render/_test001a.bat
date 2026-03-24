@@ -1,0 +1,22 @@
+set OMP_NUM_THREADS=5
+set IMAGEDUMP=50
+
+set IMAGE_X=640*3
+set IMAGE_Y=480*3
+
+set SAMPLING=50
+set SUPERSAMPLING=1
+set NEXTEVENTESTIMATION=0
+
+
+
+:2
+set IMAGE_X=640
+set IMAGE_Y=480
+
+set CPX=%1
+set CPZ=%2
+
+set CDX=%3
+set CDZ=%4
+call render blackHole001a.txt
