@@ -138,7 +138,7 @@ inline Color applyDopplerShiftSimple(const Color& original_color, double doppler
 
 // ドップラー効果をRGB色に適用（方法3: 輝度変更も含む）
 // 最も物理的に正確
- inline Color applyDopplerShiftFull(const Color& original_color, double doppler_factor) {
+ inline Color applyDopplerShiftFull(const Color& original_color, double doppler_factor, double color_doppler_factor_effect) {
     // ドップラー因子の4乗で輝度が変化（相対論的ビーミング効果）
     double intensity_factor = doppler_factor * doppler_factor *
         doppler_factor * doppler_factor;
@@ -148,7 +148,7 @@ inline Color applyDopplerShiftSimple(const Color& original_color, double doppler
     //赤(700nm) → 700 / 1.6 = 437nm（青！）になってしまう
     //
     // 波長シフトの強度を調整（0=シフトなし、1=フルシフト）
-    const double WAVELENGTH_SHIFT_STRENGTH = 0.2;  // 試しに弱くする
+    const double WAVELENGTH_SHIFT_STRENGTH = color_doppler_factor_effect;  // 試しに弱くする->0.2
 
     Color shifted_wl = applyDopplerShiftWavelength(original_color,
         1.0 + (doppler_factor - 1.0) * WAVELENGTH_SHIFT_STRENGTH);

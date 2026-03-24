@@ -261,7 +261,9 @@ inline double SphericalTheta(const Vector3d &v) {
 }
 inline double SphericalPhi(const Vector3d &v) {
     double p = atan2(v.y, v.x);
-	return (p < 0.0) ? p + PS_TWOPI : p;
+	if (p < 0.0) p += PS_TWOPI;
+	if (p >= PS_TWOPI) p = 0.0;  // 2PI‚Ò‚Á‚½‚è‚ğ0‚É–ß‚·
+	return p;
 }
 
 
@@ -285,6 +287,32 @@ inline Vector3d Sin(const Vector3d& v )
 inline Vector3d Cos(const Vector3d& v )
 {
 	return Vector3d( cos(v.x), cos(v.y), cos(v.z) );
+}
+
+// prev_dir ‚©‚ç new_dir ‚Ö‚Ì‰ñ“]‚ğ prev_up ‚É“K—p‚µ‚Ä new_up ‚ğ•Ô‚·
+inline Vector3d rotateUpVector(
+	const Vector3d& prev_dir, 
+	const Vector3d& prev_up,
+	Vector3d& new_dir
+	)
+{
+	Vector3d k = cross(prev_dir, new_dir);  // ‰ñ“]²i³‹K‰»‘Oj
+	double sinT = k.length();
+	double cosT = dot(prev_dir, new_dir);
+
+	if (sinT < 1.0e-8) {
+		// ‚Ù‚Ú“¯‚¶•ûŒü‚È‚Ì‚Å•Ï‰»‚È‚µ
+		return prev_up;
+	}
+
+	k = normalize(k);
+
+	// ƒƒhƒŠƒQƒX‰ñ“]
+	return normalize(
+		prev_up * cosT +
+		cross(k, prev_up) * sinT +
+		k * dot(k, prev_up) * (1.0 - cosT)
+	);
 }
 
 #define FOR_LOOP4	for ( int i = 0; i < 4; i++ )
@@ -780,7 +808,7 @@ class Cartesian
 	{
 
 		r = x*x + y*y + z*z;
-		if (r > 1.0e-10)
+		if (r > 1.0e-16)
 		{
 			r = sqrt(r);
 			xx = x / r;
@@ -801,7 +829,7 @@ public:
 
 	inline double SphericalTheta(const double r)
 	{
-		if (r > 1.0e-10)
+		if (r > 1.0e-16)
 		{
 			xx = x / r;
 			yy = y / r;
@@ -811,7 +839,7 @@ public:
 	}
 	inline double SphericalPhi(const double r)
 	{
-		if (r > 1.0e-10)
+		if (r > 1.0e-16)
 		{
 			xx = x / r;
 			yy = y / r;
@@ -885,8 +913,31 @@ public:
 inline Spherical Cartesian::ToSpherical()
 {
 	const double r = sqrt(x*x + y*y + z*z);
-	return Spherical(r, SphericalTheta(r), SphericalPhi(r));
+	//return Spherical(r, SphericalTheta(r), SphericalPhi(r));
+	
+	//const double r = sqrt(x * x + y * y + z * z);
+	double xx_=0, yy_=0, zz_=0;
+	if (r > 1.0e-16) {
+		xx_ = x / r;
+		yy_ = y / r;
+		zz_ = z / r;
+	}
+	else
+	{
+		return Spherical(r, 0, 0);
+	}
+	double theta = acos(Clamp(zz_, -1.0, 1.0));
+
+	double phi;
+	if (fabs(xx_) < 1.0e-6 && fabs(yy_) < 1.0e-6)
+		phi = 0.0;
+	else
+		phi = atan2(yy_, xx_);
+	if (phi < 0.0) phi += 2.0 * PS_PI;
+	if (phi >= 2.0 * PS_PI) phi = 0.0;  // 2PI‚Ò‚Á‚½‚è‚ğ0‚É–ß‚·
+	return Spherical(r, theta, phi);
 }
+
 inline Spherical Cartesian::ToBoyerLindquist(double a)
 {
 	double r0 = x*x + y*y + z*z;
@@ -895,8 +946,13 @@ inline Spherical Cartesian::ToBoyerLindquist(double a)
 	r0 = sqrt((u + sqrt(u*u + zz*zz)) / 2.);
 	double theta = acos(Clamp(z / r0, -1.0, 1.0));
 	double phi = atan2(y / r0, x / r0);
-	phi = (phi < 0.0) ? phi + PS_TWOPI : phi;
+	if (phi < 0.0) phi += PS_TWOPI;
+	if (phi >= PS_TWOPI) phi = 0.0;  // 2PI‚Ò‚Á‚½‚è‚ğ0‚É–ß‚·
+	return Spherical(r0, theta, phi);
 
+	double disc = u * u + zz * zz;
+	if (disc < 0.0) fprintf(stderr, "disc negative: %f\n", disc);
+	if (r0 < 1.0e-10) fprintf(stderr, "r0 too small: %f\n", r0);
 	//Spherical ss  = ToSpherical();
 
 	//double e1 = ss.r - r0;

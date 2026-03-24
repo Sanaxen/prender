@@ -99,9 +99,9 @@ BLACKHOLE X Y Z
 geodesics_max_length 2000
 angular_momentum 0.5
 accretion_disk 20
-accretion_disk_texture texture/accretion_disk2.png
+accretion_disk_texture texture/accretion_disk2a.png
 accretion_disk_texture texture/accretion_disk0.png
-accretion_disk_texture texture/accretion_disk1.png
+accretion_disk_texture texture/accretion_disk1a.png
 background_texture texture/InterstellarWormhole_Fig6b.bmp
 #map_coef 1 pi/2 1 pi/2
 

@@ -240,7 +240,7 @@ public:
 	
 	int special_relativity_effects;
 	int use_accretion_disk_temperature;
-	int color_doppler_factor_effect;
+	double color_doppler_factor_effect;
 
 	int use_mollweide_projection;
 
@@ -502,8 +502,8 @@ public:
 				if (strcmp(buf, "color_doppler_factor_effect\n") == 0)
 				{
 					getLine(buf, 1024, fp);
-					color_doppler_factor_effect = atoi(buf);
-					printf("color_doppler_factor_effect:%d\n", color_doppler_factor_effect);
+					color_doppler_factor_effect = atof(buf);
+					printf("color_doppler_factor_effect:%f\n", color_doppler_factor_effect);
 					continue;
 				}
 				//

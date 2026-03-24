@@ -12,6 +12,7 @@
 #include "constant.h"
 #include "vector3d.h"
 
+extern bool ___debug;
 
 using namespace prender;
 
@@ -33,6 +34,7 @@ public:
 	double kappa;	// Carter's constant's element
 
 };
+
 
 class KerrBlackHole;
 
@@ -71,7 +73,7 @@ public:
 	Matrix4D invMat;
 	int initial_condition;
 
-	int color_doppler_factor_effect = 0;
+	double color_doppler_factor_effect = 0;
 
 	std::vector<std::string> accretion_disk_texture;
 	std::string background_texture;
@@ -79,6 +81,7 @@ public:
 	double background_texture_coef;
 
 	int use_accretion_disk_temperature;
+
 
 	KerrBlackHole(double x_, double y_, double z_, double rDisc_, double m, double a_, Vector3d& cameraPos, Vector3d& cameraDir)
 	{
@@ -271,7 +274,12 @@ public:
 		double energy2 = s1*(rdot0*rdot0 / delta + thetadot0*thetadot0)
 			+ delta*sin2*phidot0*phidot0;
 
-		double energy = sqrt(energy2);
+		if (energy2 <= 0)
+		{
+			fprintf(stderr, "energy2=%.6f s1=%.6f delta=%.6f r0=%.6f\n",
+				energy2, s1, delta, r0);
+		}
+		double energy = sqrt(fabs(energy2))+1.0e-10;
 
 		/* Rescale */
 		y0[4] = y0[4] / energy;
@@ -313,46 +321,104 @@ public:
 		double cos2 = costheta*costheta;
 		double sin2 = sintheta*sintheta;
 
-		if (sin2 < 1e-16)
-		{
-			fprintf(stderr, "@@@@@@@@@@@@@@@@@\n");
-			sintheta = 1e-16;
-			sin2 = 1e-32;
+		const double POLE_THRESHOLD = 1e-8;
+		bool near_pole = (sin2 < POLE_THRESHOLD * POLE_THRESHOLD);
+		if (near_pole) {
+			// 極付近では phidot を L/sin2 の発散を避けるため再定義
+			// 実際の角運動量 L → 0 として扱う（光線が極を通過する場合）
+			// tnv（接線ベクトル）から直接 L と kappa を計算する
+
+			// 局所正規直交基底での速度成分
+			double sigma = r0 * r0 + a2; // theta=0 なので cos2=1, sin2=0
+			double delta = r0 * r0 - 2.0 * M * r0 + a2;
+
+			// 極では phidot の寄与は sin(theta) * (phidot) の形で現れるので
+			// phidot * sin(theta) を有限量として扱う
+			double vphi_sinθ = ydot0[2] * sintheta; // 有限値として保持
+
+			double rdot0 = ydot0[0];
+			double thetadot0 = ydot0[1];
+			double r2 = r0 * r0;
+
+			double energy2 = (sigma - 2.0 * r0) * (rdot0 * rdot0 / delta + thetadot0 * thetadot0)
+				+ delta * vphi_sinθ * vphi_sinθ; // sin2*phidot2 → vphi_sinθ2
+
+			double energy = sqrt(fabs(energy2)) + 1e-10;
+
+			y0[4] = rdot0 * sigma / delta / energy;
+			y0[5] = thetadot0 * sigma / energy;
+
+			// 極では L = 0（または微小）が物理的に自然
+			// L = sin2θ * (...) → 0 as sinθ → 0
+			prm.L = 0.0;
+
+			// kappa = pθ2 + a2sin2θ + L2/sin2θ
+			// L = C*sin2θ のとき L2/sin2θ = C2*sin2θ → 0
+			// 極では kappa = pθ2 + 0 + 0
+			prm.kappa = y0[5] * y0[5] + a2 * sin2; // sin2?0 なので pθ2 のみ
+
+			// それでも tnv から L を推定したい場合
+			// L ? sigma * delta * vphi_sinθ * sintheta / ((sigma-2r0) * energy)
+			// → sin2 が掛かるので自然に 0 に近づく
 		}
+		else {
+			if (sin2 < 1e-16)
+			{
+				sincos(theta0, &sintheta, &costheta);
+				sincos(theta0, &sintheta, &costheta);
+				sincos(theta0, &sintheta, &costheta);
+				fprintf(stderr, "@@@@@@@@@@@@@@@@@:%.16f (%.16f -> %.16f)\n", theta0, sintheta, sin2);
+				sintheta = 1e-16;
+				sin2 = 1e-32;
+			}
 
-		double rdot0 = ydot0[0];// cos(y)*cos(x);
-		double thetadot0 = ydot0[1];// sin(y) / r0;
+			double rdot0 = ydot0[0];// cos(y)*cos(x);
+			double thetadot0 = ydot0[1];// sin(y) / r0;
 
-		double r2 = r0 * r0;
-		double sigma = r2 + a2*cos2;			//Σ = r^2 + a^2 cos^2(θ)
-		double delta = r2 - 2.0 * M*r0 + a2;	//Δ = r^2 - 2Mr + a^2
-		double s1 = sigma - 2.0 * r0;
+			double r2 = r0 * r0;
+			double sigma = r2 + a2 * cos2;			//Σ = r^2 + a^2 cos^2(θ)
+			double delta = r2 - 2.0 * M * r0 + a2;	//Δ = r^2 - 2Mr + a^2
+			double s1 = sigma - 2.0 * r0;
 
-		//if ( fabs(sigma) < 1.0e-8 ) fprintf(stderr, "sigma %.16f\n", sigma);
-		//if ( fabs(delta) < 1.0e-8 ) fprintf(stderr, "delta %.16f\n", delta);
-		//if ( fabs(s1) < 1.0e-8 ) fprintf(stderr, "s1 %.16f\n", s1);
+			//if ( fabs(sigma) < 1.0e-8 ) fprintf(stderr, "sigma %.16f\n", sigma);
+			//if ( fabs(delta) < 1.0e-8 ) fprintf(stderr, "delta %.16f\n", delta);
+			//if ( fabs(s1) < 1.0e-8 ) fprintf(stderr, "s1 %.16f\n", s1);
 
-		y0[4] = rdot0*sigma / delta;
-		y0[5] = thetadot0*sigma;
+			y0[4] = rdot0 * sigma / delta;
+			y0[5] = thetadot0 * sigma;
 
 
-		double phidot0 = ydot0[2];
-		double energy2 = s1*(rdot0*rdot0 / delta + thetadot0*thetadot0)
-			+ delta*sin2*phidot0*phidot0;
+			double phidot0 = ydot0[2];
+			double energy2 = s1 * (rdot0 * rdot0 / delta + thetadot0 * thetadot0)
+				+ delta * sin2 * phidot0 * phidot0;
 
-		double energy = sqrt(energy2);
+			if (energy2 <= 0)
+			{
+				fprintf(stderr, "energy2=%.6f s1=%.6f delta=%.6f r0=%.6f\n",
+					energy2, s1, delta, r0);
+			}
+			double energy = sqrt(fabs(energy2)) + 1.0e-10;
 
-		if ( fabs(energy) < 1.0e-8 ) fprintf(stderr, "energy %.16f\n", energy);
+			if (fabs(energy) < 1.0e-8) fprintf(stderr, "energy %.16f\n", energy);
 
-		/* Rescale */
-		y0[4] = y0[4] / energy;
-		y0[5] = y0[5] / energy;
+			/* Rescale */
+			y0[4] = y0[4] / energy;
+			y0[5] = y0[5] / energy;
 
-		/* Angular Momentum with E = 1 */
-		prm.L = ((sigma*delta*phidot0 - 2.0*a*r0*energy)*sin2 / s1) / energy;
+			/* Angular Momentum with E = 1 */
+			prm.L = ((sigma * delta * phidot0 - 2.0 * a * r0 * energy) * sin2 / s1) / energy;
 
-		prm.kappa = y0[5] * y0[5] + a2*sin2 + prm.L*prm.L / sin2;
+			prm.kappa = y0[5] * y0[5] + a2 * sin2 + prm.L * prm.L / sin2;
 
+			if (___debug)
+			{
+				printf("frame: L=%.6f kappa=%.6f energy=%.6f s1=%.6f delta=%.6f\n",
+					prm.L, prm.kappa, energy, s1, delta);
+				printf("rdot0=%.6f thetadot0=%.6f phidot0=%.6f\n",
+					rdot0, thetadot0, phidot0);
+				printf("dir=%.6f,%.6f,%.6f\n", tnv.x, tnv.y, tnv.z);
+			}
+		}
 		//if ( fabs(prm.L) < 1.0e-8 ) fprintf(stderr, "prm.L %.16f\n", prm.L);
 		//if ( fabs(prm.kappa) < 1.0e-8 ) fprintf(stderr, "prm.kappa %.16f\n", prm.kappa);
 		/* Hack - make sure everything is normalized correctly by a call to geodesic */
@@ -478,6 +544,7 @@ public:
 		const double theta = y[1];
 		const double phi = y[2];
 
+#if 10
 		Cartesian c(dir.x, dir.y, dir.z);
 		const Spherical s = c.ToSpherical();
 		//const Spherical s = c.ToBoyerLindquist(a);
@@ -496,15 +563,75 @@ public:
 
 		const double inv_sigma = 1.0 / sigma;
 		double sint = sin(theta);
+
+		const double rdot0 = x_*zdot*(r*R*v*sint - R*R*cos(theta_obs)*cost) * inv_sigma;
+		const double thetadot0 = y_*zdot*(r*sint*cos(theta_obs) + R*v*cost) * inv_sigma;
+		
+#if 0
 		if (fabs(sint) < 1.0e-16)
 		{
 			fprintf(stderr, "sint %.16f\n", sint);
-			if ( sint < 0 ) sint = -1.0e-16;
+			if (sint < 0) sint = -1.0e-16;
 			else  sint = 1.0e-16;
 		}
-		const double rdot0 = x_*zdot*(r*R*v*sint - R*R*cos(theta_obs)*cost) * inv_sigma;
-		const double thetadot0 = y_*zdot*(r*sint*cos(theta_obs) + R*v*cost) * inv_sigma;
 		const double phidot0 = z_*zdot*sintobs*sin(Phi) / (R*sint);
+#else
+		double phidot0;
+		const double POLE_THRESHOLD = 1e-8;
+		if (fabs(sint) < POLE_THRESHOLD)
+		{
+			// 極では phi 方向の速度は不定だが、
+			// 物理的な寄与 sin2θ * phidot2 → 0 なので 0 で近似
+			phidot0 = 0.0;
+		}
+		else
+		{
+			phidot0 = z_ * zdot * sintobs * sin(Phi) / (R * sint);
+		}
+#endif
+
+#else
+		const double sin_th = sin(theta);
+		const double cos_th = cos(theta);
+		const double sin_ph = sin(phi);
+		const double cos_ph = cos(phi);
+		const Vector3d e_r(sin_th * cos_ph, sin_th * sin_ph, cos_th);
+		const Vector3d e_th(cos_th * cos_ph, cos_th * sin_ph, -sin_th);
+		const Vector3d e_ph(-sin_ph, cos_ph, 0.0);
+
+		// dir をローカルフレームに投影
+		const double dir_r = dot(dir, e_r);
+		const double dir_th = dot(dir, e_th);
+		const double dir_ph = dot(dir, e_ph);
+
+		// cos/sin を直接計算（atan2の不連続を回避）
+		const double R_ph = sqrt(dir_r * dir_r + dir_ph * dir_ph);
+		const double cos_Phi = (R_ph > 1.0e-16) ? dir_r / R_ph : 1.0;
+		const double sin_Phi = (R_ph > 1.0e-16) ? dir_ph / R_ph : 0.0;
+		const double cos_theta_obs = dir_th;
+		const double sin_theta_obs = R_ph;
+
+		const double cost = cos_th;  // cos(theta) は既に計算済み
+
+		const double rr = r * r;
+		const double sigma = rr + (a * cos_th) * (a * cos_th);
+		const double R = sqrt(a2 + rr);
+		const double v = -sin_theta_obs * cos_Phi;
+		const double zdot = 1.;
+
+		const double inv_sigma = 1.0 / sigma;
+		double sint = sin_th;  // sin(theta) は既に計算済み
+
+		if (fabs(sint) < 1.0e-16)
+		{
+			fprintf(stderr, "sint %.16f\n", sint);
+			if (sint < 0) sint = -1.0e-16;
+			else  sint = 1.0e-16;
+		}
+		const double rdot0 = x_ * zdot * (r * R * v * sint - R * R * cos_theta_obs * cost) * inv_sigma;
+		const double thetadot0 = y_ * zdot * (r * sint * cos_theta_obs + R * v * cost) * inv_sigma;
+		const double phidot0 = z_ * zdot * sin_theta_obs * sin_Phi / (R * sint);
+#endif
 
 		dydx[0] = rdot0;
 		dydx[1] = thetadot0;
@@ -609,7 +736,7 @@ public:
 			//theta = acos(Clamp(z / r, -1.0, 1.0));
 			//phi = atan2(ss.ToCartesian().y / r, ss.ToCartesian().x / r);
 
-
+#if 10
 			Cartesian c(dir.x, dir.y, dir.z);
 			//Spherical s = c.ToBoyerLindquist(a);
 			Spherical s = c.ToSpherical();
@@ -637,21 +764,88 @@ public:
 
 			const double inv_sigma = 1.0 / sigma;
 			double sint = sin(theta);
+
+			const double rdot0 = zdot*(r*R*v*sint - R*R*cos(theta_obs)*cost) * inv_sigma;
+			const double thetadot0 = zdot*(r*sint*cos(theta_obs) + R*v*cost) * inv_sigma;
+			
+#if 0
 			if (fabs(sint) < 1.0e-16)
 			{
 				fprintf(stderr, "sint %.16f\n", sint);
 				if (sint < 0) sint = -1.0e-16;
 				else  sint = 1.0e-16;
 			}
-			const double rdot0 = zdot*(r*R*v*sint - R*R*cos(theta_obs)*cost) * inv_sigma;
-			const double thetadot0 = zdot*(r*sint*cos(theta_obs) + R*v*cost) * inv_sigma;
 			const double phidot0 = zdot*sintobs*sin(Phi) / (R*sint);
+#else
+			double phidot0;
+			const double POLE_THRESHOLD = 1e-8;
+
+			if (fabs(sint) < POLE_THRESHOLD)
+			{
+				// 極では phi 方向の速度は不定だが、
+				// 物理的な寄与 sin2θ * phidot2 → 0 なので 0 で近似
+				phidot0 = 0.0;
+			}
+			else
+			{
+				phidot0 = zdot * sintobs * sin(Phi) / (R * sint);
+			}
+#endif
+#else
+			const double sin_th = sin(theta);
+			const double cos_th = cos(theta);
+			const double sin_ph = sin(phi);
+			const double cos_ph = cos(phi);
+			const Vector3d e_r(sin_th * cos_ph, sin_th * sin_ph, cos_th);
+			const Vector3d e_th(cos_th * cos_ph, cos_th * sin_ph, -sin_th);
+			const Vector3d e_ph(-sin_ph, cos_ph, 0.0);
+
+			// dir をローカルフレームに投影
+			const double dir_r = dot(dir, e_r);
+			const double dir_th = dot(dir, e_th);
+			const double dir_ph = dot(dir, e_ph);
+
+			// cos/sin を直接計算（atan2の不連続を回避）
+			const double R_ph = sqrt(dir_r * dir_r + dir_ph * dir_ph);
+			const double cos_Phi = (R_ph > 1.0e-16) ? dir_r / R_ph : 1.0;
+			const double sin_Phi = (R_ph > 1.0e-16) ? dir_ph / R_ph : 0.0;
+			const double cos_theta_obs = dir_th;
+			const double sin_theta_obs = R_ph;
+
+			const double cost = cos_th;
+
+			const double rr = r * r;
+			const double sigma = rr + (a * cos_th) * (a * cos_th);
+			const double R = sqrt(a2 + rr);
+			const double v = -sin_theta_obs * cos_Phi;
+			const double zdot = 1.;
+
+			const double inv_sigma = 1.0 / sigma;
+			double sint = sin_th;
+			if (fabs(sint) < 1.0e-16)
+			{
+				fprintf(stderr, "sint %.16f\n", sint);
+				if (sint < 0) sint = -1.0e-16;
+				else  sint = 1.0e-16;
+			}
+
+			const double rdot0 = zdot * (r * R * v * sint - R * R * cos_theta_obs * cost) * inv_sigma;
+			const double thetadot0 = zdot * (r * sint * cos_theta_obs + R * v * cost) * inv_sigma;
+			const double phidot0 = zdot * sin_theta_obs * sin_Phi / (R * sint); 
+#endif
 
 			dydx[0] = rdot0;
 			dydx[1] = thetadot0;
 			dydx[2] = phidot0;
 
 			initial2(prm, y, dydx, traceDir*dir);
+
+			double check_x = dydx[0] * sint * cost - dydx[1] * cost * cos(Phi) - dydx[2] * sin(Phi);
+			double check_y = dydx[0] * sint * sin(Phi) - dydx[1] * cost * sin(Phi) + dydx[2] * cos(Phi);
+			double check_z = dydx[0] * cost + dydx[1] * sint;
+			Vector3d dydx_dir(check_x, check_y, check_z);
+			double alignment = dot(normalize(dydx_dir), dir);
+			//printf("alignment=%.6f (1=正常, -1=反転)\n", alignment);
 
 			return 0;
 

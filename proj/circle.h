@@ -7,7 +7,7 @@
 #include"KerrBlackHole.h"
 #include "WormHole.h"
 //#include "relativistic.h"
-inline Color applyDopplerShiftFull(const Color& original_color, double doppler_factor);
+inline Color applyDopplerShiftFull(const Color& original_color, double doppler_factor, double color_doppler_factor_effect);
 
 
 namespace prender {
@@ -91,16 +91,16 @@ namespace prender {
 
 		void Map(double r, double theta, double phi, int& x, int& y)
 		{
-			// do mapping of texture image
-			double textureScale = 1.0;
+			if (phi < 0.0) phi += 2.0 * PS_PI;
+			if (theta < 0.0) theta = -theta;
 
-			x = (int)(((phi * textureScale) / (2 * PS_PI)) * this->SizeX) % this->SizeX;
-			y = (int)((theta * textureScale / PS_PI) * this->SizeY) % this->SizeY;
 
-			if (x < 0) x = this->SizeX + x;
-			if (y < 0) y = this->SizeY + y;
-
-			//y = SizeY - y - 1;
+			x = (int)(phi / (2.0 * PS_PI) * this->SizeX);
+			x = x % this->SizeX;
+			
+			// theta: 0`PI ¨ YÀ•W
+			int y1 = (int)(theta / PS_PI * this->SizeY);
+			y = y1 % this->SizeY;
 
 		}
 	};
@@ -307,8 +307,8 @@ namespace prender {
 							//if (BlackHole->color_doppler_factor_effect)
 							{
 
-								hitpoint->material.color = applyDopplerShiftFull(hitpoint->material.color, doppler);
-								hitpoint->material.emission = applyDopplerShiftFull(hitpoint->material.emission, doppler);
+								hitpoint->material.color = applyDopplerShiftFull(hitpoint->material.color, doppler, BlackHole->color_doppler_factor_effect);
+								hitpoint->material.emission = applyDopplerShiftFull(hitpoint->material.emission, doppler, BlackHole->color_doppler_factor_effect);
 							}
 							//printf("------------------color (%f,%f,%f)\n",  hitpoint->material.color.x, hitpoint->material.color.y, hitpoint->material.color.z);
 							//printf("------------------emission (%f,%f,%f)\n", hitpoint->material.emission.x, hitpoint->material.emission.y, hitpoint->material.emission.z);

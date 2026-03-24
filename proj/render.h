@@ -20,6 +20,7 @@
 #include "erpt.h"
 
 #include "relativistic.h"
+bool ___debug;
 
 namespace prender {
 
@@ -108,6 +109,20 @@ public:
 		camera_dir = env_p->camera_dir;
 		camera_up = env_p->camera_up;
 
+		double cam_phi = atan2(camera_dir.y, camera_dir.x);
+		if (cam_phi < 0.0) cam_phi += 2.0 * PS_PI;
+
+		if (fabs(cam_phi - PS_PI) < 1.0e-6 || cam_phi < 1.0e-6 || fabs(cam_phi - 2.0 * PS_PI) < 1.0e-6)
+		{
+			camera_dir.y += 1.0e-6;
+			// 正規化して長さを保つ
+			double len = sqrt(camera_dir.x * camera_dir.x +
+				camera_dir.y * camera_dir.y +
+				camera_dir.z * camera_dir.z);
+			camera_dir.x /= len;
+			camera_dir.y /= len;
+			camera_dir.z /= len;
+		}
 		// ワールド座標系でのスクリーンの大きさ
 		screen_width = env_p->world_screen_width * env_p->image_width / env_p->image_height;
 		screen_height = env_p->world_screen_height;
@@ -119,8 +134,8 @@ public:
 		screen_x = normalize(cross(camera_dir, camera_up)) * screen_width;
 		screen_y = normalize(cross(screen_x, camera_dir)) * screen_height;
 		screen_center = camera_position + camera_dir * screen_dist;
-		printf("%f,%f,%f\n", screen_x.x, screen_x.y, screen_x.z);
-		printf("%f,%f,%f\n", screen_y.x, screen_y.y, screen_y.z);
+		printf("screen_x:%f,%f,%f\n", screen_x.x/ screen_width, screen_x.y/ screen_width, screen_x.z/ screen_width);
+		printf("screen_y:%f,%f,%f\n", screen_y.x/ screen_height, screen_y.y/ screen_height, screen_y.z/ screen_height);
 
 		width = env_p->image_width;
 		height = env_p->image_height;
@@ -1182,6 +1197,8 @@ public:
 		output_count = height_init;
 #endif
 
+		const double SQRT2 = sqrt(2.0);
+
 		// 一つのサブピクセルあたりsamples回サンプリングする
 		for (int s = 0; s < samples; s++)
 		{
@@ -1280,17 +1297,17 @@ public:
 									double nx = ((r1 + x) * cameraScreen.iw) * 2 - 1;
 									double ny = 1 - ((r2 + y) * cameraScreen.ih) * 2;
 
-									double X = nx * 2.0 * sqrt(2);
-									double Y = ny * sqrt(2);
+									double X = nx * 2.0 * SQRT2;
+									double Y = ny * SQRT2;
 
-									if (pow(X / (2 * sqrt(2)), 2) + pow(Y / sqrt(2), 2) > 1.0)
+									if (pow(X / (2 * SQRT2), 2) + pow(Y / SQRT2, 2) > 1.0)
 									{
 										if (use_mollweide_projection) out_range = true;
 									}
 
-									double theta = asin(Y / sqrt(2));
+									double theta = asin(Y / SQRT2);
 									double phi = asin((2 * theta + sin(2 * theta)) / M_PI);
-									double lambda = (M_PI * X) / (2 * sqrt(2) * cos(theta));
+									double lambda = (M_PI * X) / (2 * SQRT2 * cos(theta));
 
 									Vector3d dir_tmp;
 									dir_tmp.z = cos(phi) * cos(lambda);
@@ -1331,6 +1348,7 @@ public:
 								//屈折率を表す代表スペクトル
 								const double wavelength = D_LINE_WAVELENGTH_SODIUM;
 #endif
+
 								//放射輝度の計算
 								Spectrum v = radiance(0, env_p, ray, &(rnd[thread_id]), 0, wavelength, nextEventEstimation, participatingMedia)*smp;
 
@@ -1342,7 +1360,7 @@ public:
 #ifdef SPECTRUM_USE
 										v = v / ray.doppler_factor;
 #else
-										v = applyDopplerShiftFull(v, ray.doppler_factor);
+										v = applyDopplerShiftFull(v, ray.doppler_factor, env_p->color_doppler_factor_effect);
 #endif
 									}
 								}
