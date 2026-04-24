@@ -320,7 +320,7 @@ public:
 		ibl_ent = 0;
 
 		timeLimit = -1.0;
-		threads = std::min(1, omp_get_max_threads()-1);
+		threads = std::max(1, omp_get_max_threads()-1);
 		if (threads < 1) threads = 1;
 		lensRadius = -1.0;
 		focalDistance = 0.0;

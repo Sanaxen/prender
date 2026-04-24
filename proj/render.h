@@ -1171,7 +1171,7 @@ public:
 			rnd[i].seed(i+1);
 		}
 
-		int use_mollweide_projection = 1;
+		int use_mollweide_projection = env_p->use_mollweide_projection;
 
 		int height_last = cameraScreen.height;
 		int height_init = 0;
