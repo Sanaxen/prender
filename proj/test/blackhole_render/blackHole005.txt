@@ -128,7 +128,7 @@ special_relativity_effects
 
 #color_doppler_factor_effect
 color_doppler_factor_effect
-0.5
+0.9
 
 use_mollweide_projection
 1
